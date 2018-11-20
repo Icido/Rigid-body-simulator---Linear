@@ -14,8 +14,7 @@ public class Object_Movement : MonoBehaviour
     public Vector3 appliedForce;
     public Vector3 resultantForce;
     public float reactionForce;
-    public bool isMoving = false;
-    public bool isStatic = false;
+    public bool isMovingOnGround = false;
 
 
     // Use this for initialization
@@ -47,7 +46,7 @@ public class Object_Movement : MonoBehaviour
         
 
         //Choose which reaction force to use
-        if (!isMoving)
+        if (!isMovingOnGround)
         {
             reactionForce = staticFriction * weight;
         }
@@ -57,45 +56,53 @@ public class Object_Movement : MonoBehaviour
         }
 
 
-        if (!isStatic)
+
+
+
+        
+
+
+
+        if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce || resultantForce.y > 0)
         {
-            //Query if resultant force is greater than static
-            //  Move if true
-            if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce)
-            {
-                isMoving = true;
-                float deltaTime = Time.deltaTime;
+            isMovingOnGround = true;
+            float deltaTime = Time.deltaTime;
 
-                //currentPosition = this.transform.position;
-                velocity += ((resultantForce / mass) * deltaTime);
-                this.transform.position += (velocity * deltaTime);
-                currentPosition = this.transform.position;
+            //currentPosition = this.transform.position;
+            velocity += ((resultantForce / mass) * deltaTime);
+            this.transform.position += (velocity * deltaTime);
+            currentPosition = this.transform.position;
 
-            }
-            else
-            {
-                isMoving = false;
-                float deltaTime = Time.deltaTime;
+        }
+        else
+        {
+            isMovingOnGround = false;
+            float deltaTime = Time.deltaTime;
 
-                //currentPosition = this.transform.position;
-                if (velocity.x < -0.3f)
-                    velocity.x += ((reactionForce / mass) * deltaTime);
-                else if (velocity.x > 0.3f)
-                    velocity.x -= ((reactionForce / mass) * deltaTime);
-                else if (velocity.x > -0.3f && velocity.x < 0.3f)
-                    velocity.x = 0f;
+            if (transform.position.y > (transform.localScale.y / 2))
+                velocity.y -= gravity;
 
-                if (velocity.y > 0f)
-                    velocity.y -= gravity;
-                //else if velocity down is greater than terminal velocity, keep it at terminal velocity
-                //until it collides with the floor
 
-                this.transform.position += (velocity * deltaTime);
-                currentPosition = this.transform.position;
-                //currentPosition += suvatDisplacement(velocity, , deltaTime);
-            }
+            //currentPosition = this.transform.position;
+            if (velocity.x < -0.3f)
+                velocity.x += ((reactionForce / mass) * deltaTime);
+            else if (velocity.x > 0.3f)
+                velocity.x -= ((reactionForce / mass) * deltaTime);
+            else if (velocity.x > -0.3f && velocity.x < 0.3f)
+                velocity.x = 0f;
+
+            if (velocity.y > -0.3f && velocity.y < 0.3f)
+                velocity.y = 0f;
+
+            //else if velocity down is greater than terminal velocity, keep it at terminal velocity
+            //until it collides with the floor
+
+            this.transform.position += (velocity * deltaTime);
+            currentPosition = this.transform.position;
+            //currentPosition += suvatDisplacement(velocity, , deltaTime);
         }
 
+        //Debug.Log(velocity);
 
     }
 

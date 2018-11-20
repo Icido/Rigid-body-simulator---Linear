@@ -20,25 +20,13 @@ public class Collision_System : MonoBehaviour {
     [SerializeField]
     private CollisionType colType;
 
-    [SerializeField]
     private float sphereRadius;
 
-    [SerializeField]
     private float minAABBx;
-
-    [SerializeField]
     private float maxAABBx;
-
-    [SerializeField]
     private float minAABBy;
-
-    [SerializeField]
     private float maxAABBy;
-
-    [SerializeField]
     private float minAABBz;
-
-    [SerializeField]
     private float maxAABBz;
 
     enum SeparatingPlane
@@ -52,7 +40,6 @@ public class Collision_System : MonoBehaviour {
         NULL
     }
 
-    [SerializeField]
     private SeparatingPlane separatingPlane = SeparatingPlane.NULL;
 
 
@@ -73,7 +60,6 @@ public class Collision_System : MonoBehaviour {
         {
             //This is just using the x scale to create a sphere collider for the box.
             sphereRadius = (this.transform.localScale.x / 2f);
-            Debug.Log(this.name + " sphere collider radius: " + sphereRadius + " units.");
         }
         
 
@@ -230,7 +216,20 @@ public class Collision_System : MonoBehaviour {
             }
         }
         hasImpulsed = false;
-	}
+
+
+        if(transform.position.y < transform.localScale.y)
+        {
+            var imp1 = (-(this.GetComponent<Object_Movement>().velocity.y) * (coefficientOfRestitution + 1));
+            var imp2 = (1 / this.GetComponent<Object_Movement>().mass);
+            var impulse = imp1 / imp2;
+
+            this.GetComponent<Object_Movement>().velocity.y = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.y;
+
+        }
+
+
+    }
 
 
 
