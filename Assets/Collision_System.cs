@@ -6,8 +6,8 @@ public class Collision_System : MonoBehaviour {
 
     [SerializeField]
     private bool isColliding;
-    [SerializeField]
-    private float coefficientOfRestitution;
+    
+    public float coefficientOfRestitution;
     [SerializeField]
     private bool hasImpulsed = false;
 

@@ -16,6 +16,8 @@ public class Object_Movement : MonoBehaviour
     public float reactionForce;
     public bool isMovingOnGround = false;
 
+    public int leniancy = 10;
+
 
     // Use this for initialization
     void Start()
@@ -56,13 +58,6 @@ public class Object_Movement : MonoBehaviour
         }
 
 
-
-
-
-        
-
-
-
         if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce || resultantForce.y > 0)
         {
             isMovingOnGround = true;
@@ -80,19 +75,26 @@ public class Object_Movement : MonoBehaviour
             float deltaTime = Time.deltaTime;
 
             if (transform.position.y > (transform.localScale.y / 2))
+            {
                 velocity.y -= gravity;
+            }
+            else
+            {
+                if (velocity.x < -0.3f)
+                    velocity.x += ((reactionForce / mass) * deltaTime);
+                else if (velocity.x > 0.3f)
+                    velocity.x -= ((reactionForce / mass) * deltaTime);
+                else if (velocity.x > -0.3f && velocity.x < 0.3f)
+                    velocity.x = 0f;
+            }
 
 
-            //currentPosition = this.transform.position;
-            if (velocity.x < -0.3f)
-                velocity.x += ((reactionForce / mass) * deltaTime);
-            else if (velocity.x > 0.3f)
-                velocity.x -= ((reactionForce / mass) * deltaTime);
-            else if (velocity.x > -0.3f && velocity.x < 0.3f)
-                velocity.x = 0f;
-
-            if (velocity.y > -0.3f && velocity.y < 0.3f)
+            if (velocity.y > -(GetComponent<Collision_System>().coefficientOfRestitution * leniancy) && velocity.y < (GetComponent<Collision_System>().coefficientOfRestitution * leniancy))
                 velocity.y = 0f;
+
+            if (transform.position.y < (transform.localScale.y / 2))
+                transform.position = new Vector3(transform.position.x, (transform.localScale.y / 2), transform.position.z);
+
 
             //else if velocity down is greater than terminal velocity, keep it at terminal velocity
             //until it collides with the floor
@@ -101,8 +103,6 @@ public class Object_Movement : MonoBehaviour
             currentPosition = this.transform.position;
             //currentPosition += suvatDisplacement(velocity, , deltaTime);
         }
-
-        //Debug.Log(velocity);
 
     }
 
