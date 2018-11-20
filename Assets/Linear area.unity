@@ -217,8 +217,7 @@ MonoBehaviour:
   appliedForce: {x: 0, y: 0, z: 0}
   resultantForce: {x: 0, y: 0, z: 0}
   reactionForce: 0
-  isMoving: 0
-  isStatic: 0
+  isMovingOnGround: 0
 --- !u!114 &811956941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,14 +233,6 @@ MonoBehaviour:
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
   colType: 1
-  sphereRadius: 0
-  minAABBx: 0
-  maxAABBx: 0
-  minAABBy: 0
-  maxAABBy: 0
-  minAABBz: 0
-  maxAABBz: 0
-  separatingPlane: 6
   collidableObjects: []
   collidingWith: []
 --- !u!23 &811956942
@@ -292,7 +283,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 811956939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -13.5, y: 1, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -410,8 +401,7 @@ MonoBehaviour:
   appliedForce: {x: 20, y: 0, z: 0}
   resultantForce: {x: 0, y: 0, z: 0}
   reactionForce: 0
-  isMoving: 0
-  isStatic: 1
+  isMovingOnGround: 0
 --- !u!114 &831962236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,14 +417,6 @@ MonoBehaviour:
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
   colType: 0
-  sphereRadius: 0
-  minAABBx: 0
-  maxAABBx: 0
-  minAABBy: 0
-  maxAABBy: 0
-  minAABBz: 0
-  maxAABBz: 0
-  separatingPlane: 0
   collidableObjects: []
   collidingWith: []
 --- !u!1 &940295506
@@ -552,14 +534,6 @@ MonoBehaviour:
   coefficientOfRestitution: 1
   hasImpulsed: 0
   colType: 0
-  sphereRadius: 0
-  minAABBx: 0
-  maxAABBx: 0
-  minAABBy: 0
-  maxAABBy: 0
-  minAABBz: 0
-  maxAABBz: 0
-  separatingPlane: 0
   collidableObjects: []
   collidingWith: []
 --- !u!114 &1121017276
@@ -582,8 +556,7 @@ MonoBehaviour:
   appliedForce: {x: 20, y: 0, z: 0}
   resultantForce: {x: 0, y: 0, z: 0}
   reactionForce: 0
-  isMoving: 0
-  isStatic: 1
+  isMovingOnGround: 0
 --- !u!23 &1121017277
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -632,7 +605,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1121017274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -663,7 +636,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1668654167}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df0a873e0db30747ba920e9f4f98a98, type: 3}
   m_Name: 
@@ -672,14 +645,6 @@ MonoBehaviour:
   coefficientOfRestitution: 0
   hasImpulsed: 0
   colType: 1
-  sphereRadius: 0
-  minAABBx: 0
-  maxAABBx: 0
-  minAABBy: 0
-  maxAABBy: 0
-  minAABBz: 0
-  maxAABBz: 0
-  separatingPlane: 6
   collidableObjects: []
   collidingWith: []
 --- !u!23 &1668654169
@@ -742,7 +707,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1668654167}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbe877845d8ac7e4d977d031911226cf, type: 3}
   m_Name: 
@@ -756,8 +721,7 @@ MonoBehaviour:
   appliedForce: {x: 0, y: 0, z: 0}
   resultantForce: {x: 0, y: 0, z: 0}
   reactionForce: 0
-  isMoving: 0
-  isStatic: 1
+  isMovingOnGround: 0
 --- !u!1 &1790778900
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,8 +762,7 @@ MonoBehaviour:
   appliedForce: {x: 0, y: 0, z: 0}
   resultantForce: {x: 0, y: 0, z: 0}
   reactionForce: 0
-  isMoving: 0
-  isStatic: 0
+  isMovingOnGround: 0
 --- !u!114 &1790778902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,7 +776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spring_extension: 0
   spring_ext_step: 0.5
-  spring_limit: -12
+  spring_limit: -20
   spring_constant: 700
   spring_force: 0
   launch_angle: 0
@@ -833,14 +796,6 @@ MonoBehaviour:
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
   colType: 1
-  sphereRadius: 0
-  minAABBx: 0
-  maxAABBx: 0
-  minAABBy: 0
-  maxAABBy: 0
-  minAABBz: 0
-  maxAABBz: 0
-  separatingPlane: 6
   collidableObjects: []
   collidingWith: []
 --- !u!23 &1790778904
