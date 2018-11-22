@@ -212,6 +212,9 @@ public class Collision_System : MonoBehaviour {
 
                     hasImpulsed = true;
                     collider.GetComponent<Collision_System>().hasImpulsed = true;
+
+
+
                 }
             }
         }

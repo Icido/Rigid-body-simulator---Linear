@@ -58,7 +58,9 @@ public class Object_Movement : MonoBehaviour
         }
 
 
-        if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce || resultantForce.y > 0)
+        if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce ||
+            resultantForce.z > reactionForce || resultantForce.z < -reactionForce ||
+            resultantForce.y > 0)
         {
             isMovingOnGround = true;
             float deltaTime = Time.deltaTime;
@@ -86,6 +88,13 @@ public class Object_Movement : MonoBehaviour
                     velocity.x -= ((reactionForce / mass) * deltaTime);
                 else if (velocity.x > -0.3f && velocity.x < 0.3f)
                     velocity.x = 0f;
+
+                if (velocity.z < -0.3f)
+                    velocity.z += ((reactionForce / mass) * deltaTime);
+                else if (velocity.z > 0.3f)
+                    velocity.z -= ((reactionForce / mass) * deltaTime);
+                else if (velocity.z > -0.3f && velocity.z < 0.3f)
+                    velocity.z = 0f;
             }
 
 
