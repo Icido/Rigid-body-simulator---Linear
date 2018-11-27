@@ -7,6 +7,7 @@ public class Rotational_Movement : MonoBehaviour {
 
     public float mass;
     public float radius;
+    public Vector3 force;
 
     public Vector3 angularRotation;
     public Vector3 angularVelocity;
@@ -42,7 +43,12 @@ public class Rotational_Movement : MonoBehaviour {
 
         leverArmVec3 = new Vector3(leverArm, leverArm, leverArm);
 
-        //Torque = Vector3.Cross(Force, leverArmVec3);
+        if (Input.GetKey(KeyCode.K))
+            force = new Vector3(0f, 10f, 0f);
+        else
+            force = new Vector3(0f, 0f, 0f);
+
+        torque = Vector3.Cross(force, leverArmVec3);
 
         float deltaTime = Time.deltaTime;
 
@@ -61,7 +67,14 @@ public class Rotational_Movement : MonoBehaviour {
                                                angularVelocity.z, 0f, -angularVelocity.x,
                                                -angularVelocity.y, angularVelocity.x, 0f);
 
-        angularRotation3x3.plusEquals(inverseAngularVelocity.matrixMultiplication(angularRotation3x3).matrixMultiplication(deltaTime));
+        //This is an abomination
+        Matrix3x3 tempMat3x3 = new Matrix3x3().matrixMultiplication(angularRotation3x3, deltaTime);
+
+        Matrix3x3 tempMat3x3num2 = inverseAngularVelocity.matrixMultiplication(inverseAngularVelocity, tempMat3x3);
+
+        angularRotation3x3 = angularRotation3x3.plusEquals(angularRotation3x3, tempMat3x3num2);
+
+        Debug.Log(angularRotation3x3);
 
     }
 }
