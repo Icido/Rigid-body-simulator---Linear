@@ -20,7 +20,7 @@ public class Collision_System : MonoBehaviour {
     [SerializeField]
     private CollisionType colType;
 
-    private float sphereRadius;
+    public float sphereRadius;
 
     private float minAABBx;
     private float maxAABBx;

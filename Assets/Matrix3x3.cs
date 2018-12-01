@@ -43,53 +43,6 @@ public class Matrix3x3 : MonoBehaviour {
 		
 	}
 
-    public Matrix3x3 matrixMultiplication(Matrix3x3 m1, Matrix3x3 m2)
-    {
-
-        float n00 = ((m1.m00 * m2.m00) + (m1.m01 * m2.m10) + (m1.m02 * m2.m20));
-        float n01 = ((m1.m00 * m2.m01) + (m1.m01 * m2.m11) + (m1.m02 * m2.m21));
-        float n02 = ((m1.m00 * m2.m02) + (m1.m01 * m2.m12) + (m1.m02 * m2.m22));
-
-        float n10 = ((m1.m10 * m2.m00) + (m1.m11 * m2.m10) + (m1.m12 * m2.m20));
-        float n11 = ((m1.m10 * m2.m01) + (m1.m11 * m2.m11) + (m1.m12 * m2.m21));
-        float n12 = ((m1.m10 * m2.m02) + (m1.m11 * m2.m12) + (m1.m12 * m2.m22));
-
-        float n20 = ((m1.m20 * m2.m00) + (m1.m21 * m2.m10) + (m1.m22 * m2.m20));
-        float n21 = ((m1.m20 * m2.m01) + (m1.m21 * m2.m11) + (m1.m22 * m2.m21));
-        float n22 = ((m1.m20 * m2.m02) + (m1.m21 * m2.m12) + (m1.m22 * m2.m22));
-
-
-        return new Matrix3x3(n00, n01, n02, 
-                             n10, n11, n12, 
-                             n20, n21, n22);
-    }
-
-    public Matrix3x3 matrixMultiplication(Matrix3x3 m1, float m2)
-    {
-        float n00 = m1.m00 * m2;
-        float n01 = m1.m01 * m2;
-        float n02 = m1.m02 * m2;
-
-        float n10 = m1.m10 * m2;
-        float n11 = m1.m11 * m2;
-        float n12 = m1.m12 * m2;
-
-        float n20 = m1.m20 * m2;
-        float n21 = m1.m21 * m2;
-        float n22 = m1.m22 * m2;
-
-        return new Matrix3x3(n00, n01, n02,
-                             n10, n11, n12,
-                             n20, n21, n22);
-    }
-
-    public Matrix3x3 plusEquals(Matrix3x3 m1, Matrix3x3 m2)
-    {
-
-        return new Matrix3x3(m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02,
-                            m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12,
-                            m1.m20 + m2.m20, m1.m21 + m2.m21, m1.m22 + m2.m22);
-    }
 
 
 }
