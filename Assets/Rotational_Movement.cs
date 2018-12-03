@@ -13,16 +13,12 @@ public class Rotational_Movement : MonoBehaviour {
     public Vector3 angularVelocity;
     public Vector3 angularMomentum;
 
-    public Vector3 inverseAngularVelocityRowA;
-    public Vector3 inverseAngularVelocityRowB;
-    public Vector3 inverseAngularVelocityRowC;
+    public Matrix4x4 inverseAngularVelocity;
 
-    public Vector3 angularRotation3x3RowA;
-    public Vector3 angularRotation3x3RowB;
-    public Vector3 angularRotation3x3RowC;
+    public Matrix4x4 angularRotationMat;
 
     public float inertiaTensorEquation;
-    
+
     public Vector3 torque;
     public float leverArm;
     public Vector3 leverArmVec3;
@@ -30,27 +26,30 @@ public class Rotational_Movement : MonoBehaviour {
     [SerializeField]
     private MomentOfInertia InertiaType;
 
-    private Vector3 InertiaTensorRowA;
-    private Vector3 InertiaTensorRowB;
-    private Vector3 InertiaTensorRowC;
+    private Matrix4x4 InertiaTensor;
 
     enum MomentOfInertia
     {
         SphereSolid
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         mass = GetComponent<Object_Movement>().mass;
         radius = GetComponent<Collision_System>().sphereRadius;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update() {
 
         //Incoming force and normal at force point
 
+        //For now: Lever arm = radius
+        leverArm = radius;
+
         leverArmVec3 = new Vector3(leverArm, leverArm, leverArm);
+
+
 
         if (Input.GetKey(KeyCode.K))
             force = new Vector3(0f, 10f, 0f);
@@ -66,46 +65,102 @@ public class Rotational_Movement : MonoBehaviour {
         //Should do switch case for each interia tensor, but since we have one, it's simple
         inertiaTensorEquation = ((2 / 5) * mass * radius * radius);
 
-        InertiaTensorRowA = new Vector3(inertiaTensorEquation, 0f, 0f);
-        InertiaTensorRowB = new Vector3(0f, inertiaTensorEquation, 0f);
-        InertiaTensorRowC = new Vector3(0f, 0f, inertiaTensorEquation);
+        InertiaTensor = new Matrix4x4(new Vector4(inertiaTensorEquation, 0f, 0f, 0f),
+                                      new Vector4(0f, inertiaTensorEquation, 0f, 0f),
+                                      new Vector4(0f, 0f, inertiaTensorEquation, 0f),
+                                      new Vector4(0f, 0f, 0f, 1f));
+
+
+
+        //Inverse of Inertia Tensor: 1 / inertiaTensorEquation. Then input where inertiaTensorEquation is in regular 3x3 matrix
 
         angularVelocity = angularMomentum * inertiaTensorEquation;
 
 
+
+        inverseAngularVelocity = new Matrix4x4(new Vector4(0f, angularVelocity.z, -angularVelocity.y, 0f),
+                                               new Vector4(-angularVelocity.z, 0f, -angularVelocity.x, 0f),
+                                               new Vector4(angularVelocity.y, -angularVelocity.x, 0f, 0f),
+                                               new Vector4(0f, 0f, 0f, 1f));
+
+
         Quaternion quats = transform.rotation;
-        Debug.Log(quats);
-        
+        Vector3 eulerA = quats.eulerAngles;
+        //Debug.Log(eulerA);
 
+        //Take current rotation of object and convert to 3x3
+        angularRotationMat = to4x4Matrix(eulerA);
 
-        inverseAngularVelocityRowA = new Vector3(0f, -angularVelocity.z, angularVelocity.y);
-        inverseAngularVelocityRowB = new Vector3(angularVelocity.z, 0f, -angularVelocity.x);
-        inverseAngularVelocityRowC = new Vector3(-angularVelocity.y, angularVelocity.x, 0f);
+        Matrix4x4 tempMat = multiplyByFloat(angularRotationMat, deltaTime);
 
-        //This is an abomination
-        Vector3 tempMat3x3R1 = angularRotation3x3RowA * deltaTime;
-        Vector3 tempMat3x3R2 = angularRotation3x3RowB * deltaTime;
-        Vector3 tempMat3x3R3 = angularRotation3x3RowC * deltaTime;
+        Matrix4x4 tempMat2 = inverseAngularVelocity * tempMat;
 
-        Vector3 tempMat3x3num2R1 = rowMult(inverseAngularVelocityRowA, tempMat3x3R1, tempMat3x3R2, tempMat3x3R3);
-        Vector3 tempMat3x3num2R2 = rowMult(inverseAngularVelocityRowA, tempMat3x3R1, tempMat3x3R2, tempMat3x3R3);
-        Vector3 tempMat3x3num2R3 = rowMult(inverseAngularVelocityRowA, tempMat3x3R1, tempMat3x3R2, tempMat3x3R3);
+        angularRotationMat = matrixAddition(angularRotationMat, tempMat2);
 
-        angularRotation3x3RowA += tempMat3x3num2R1;
-        angularRotation3x3RowB += tempMat3x3num2R2;
-        angularRotation3x3RowC += tempMat3x3num2R3;
-
-        //Debug.Log(angularRotation3x3RowA);
-        //Debug.Log(angularRotation3x3RowB);
-        //Debug.Log(angularRotation3x3RowC);
+        transform.Rotate(toEuler(angularRotationMat));
 
     }
 
-    public Vector3 rowMult(Vector3 initRow, Vector3 otherRowA, Vector3 otherRowB, Vector3 otherRowC)
+
+    public Matrix4x4 to4x4Matrix(Vector3 eulerAngles)
     {
-        return new Vector3((initRow.x * otherRowA.x) + (initRow.y * otherRowB.x) + (initRow.z * otherRowC.x),
-                           (initRow.x * otherRowA.y) + (initRow.y * otherRowB.y) + (initRow.z * otherRowC.y),
-                           (initRow.x * otherRowA.z) + (initRow.y * otherRowB.z) + (initRow.z * otherRowC.z));
+        float alpha = Mathf.Deg2Rad * eulerAngles.x;
+        float beta = Mathf.Deg2Rad * eulerAngles.y;
+        float gamma = Mathf.Deg2Rad * eulerAngles.z;
+
+
+        float cosAlpha = Mathf.Cos(alpha);
+        float sinAlpha = Mathf.Sin(alpha);
+        float cosBeta = Mathf.Cos(beta);
+        float sinBeta = Mathf.Sin(beta);
+        float cosGamma = Mathf.Cos(gamma);
+        float sinGamma = Mathf.Sin(gamma);
+
+        Vector4 columnA = new Vector4(cosBeta * cosGamma, sinAlpha * sinBeta * cosGamma - cosAlpha * sinGamma, cosAlpha * sinBeta * cosGamma + sinAlpha * sinGamma, 0f);
+        Vector4 columnB = new Vector4(cosBeta * sinGamma, sinAlpha * sinBeta * sinGamma + cosAlpha * cosGamma, cosAlpha * sinBeta * sinGamma - sinAlpha * cosGamma, 0f);
+        Vector4 columnC = new Vector4(-sinBeta, sinAlpha * cosBeta, cosAlpha * cosBeta, 0f);
+        Vector4 columnD = new Vector4(0f, 0f, 0f, 1f);
+
+        return new Matrix4x4(columnA, columnB, columnC, columnD);
+    }
+
+    public Matrix4x4 multiplyByFloat(Matrix4x4 mat, float f)
+    {
+
+        Vector4 columnA = mat.GetColumn(0) * f;
+        Vector4 columnB = mat.GetColumn(1) * f;
+        Vector4 columnC = mat.GetColumn(2) * f;
+        
+        return new Matrix4x4(columnA, columnB, columnC, mat.GetColumn(3));
+    }
+
+    public Matrix4x4 matrixAddition(Matrix4x4 mat1, Matrix4x4 mat2)
+    {
+        Vector4 columnZero = new Vector4(0f, 0f, 0f, 1f);
+
+        return new Matrix4x4(mat1.GetColumn(0) + mat2.GetColumn(0), mat1.GetColumn(1) + mat2.GetColumn(1), mat1.GetColumn(2) + mat2.GetColumn(2), columnZero);
+    }
+
+    public Vector3 toEuler(Matrix4x4 mat)
+    {
+
+        float z;
+        if (mat.GetColumn(1).x == 0)
+            z = 0;
+        else
+            z = Mathf.Rad2Deg * Mathf.Atan(mat.GetColumn(1).z / mat.GetColumn(1).x);
+
+        float y;
+        if (mat.GetColumn(3).y == 0)
+            y = 0;
+        else
+            y = Mathf.Rad2Deg * Mathf.Atan(mat.GetColumn(0).y / mat.GetColumn(3).y);
+
+
+        float x = Mathf.Rad2Deg * Mathf.Asin(-mat.GetColumn(1).y);
+            
+
+        return new Vector3(x, y, z);
     }
 
 
