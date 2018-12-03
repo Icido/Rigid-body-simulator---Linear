@@ -93,6 +93,7 @@ public class Rotational_Movement : MonoBehaviour {
         //Debug.Log(eulerA);
 
         //Take current rotation of object and convert to 3x3
+        /*
         angularRotationMat = to4x4Matrix(eulerA);
 
         Matrix4x4 tempMat = multiplyByFloat(angularRotationMat, deltaTime);
@@ -102,7 +103,9 @@ public class Rotational_Movement : MonoBehaviour {
         angularRotationMat = matrixAddition(angularRotationMat, tempMat2);
 
         transform.Rotate(toEuler(angularRotationMat));
+        */
 
+        transform.Rotate(rotationCalculation(eulerA, deltaTime, inverseAngularVelocity));
     }
 
     public Vector3 rotationCalculation(Vector3 eulerRotations, float dTime, Matrix4x4 iAV)
@@ -112,19 +115,29 @@ public class Rotational_Movement : MonoBehaviour {
                                        new Vector4(0f, -Mathf.Sin(eulerRotations.x), Mathf.Cos(eulerRotations.x), 0f),
                                        new Vector4(0f, 0f, 0f, 1f));
 
+        Matrix4x4 newRotX = matrixAddition(rotX, (iAV * multiplyByFloat(rotX, dTime)));
+
+        float newX = Mathf.Acos(newRotX.m11);
+
         Matrix4x4 rotY = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.y), 0f, -Mathf.Sin(eulerRotations.y), 0f),
                                        new Vector4(0f, 1f, 0f, 0f),
                                        new Vector4(Mathf.Sin(eulerRotations.y), 0f, Mathf.Cos(eulerRotations.y), 0f),
                                        new Vector4(0f, 0f, 0f, 1f));
+
+        Matrix4x4 newRotY = matrixAddition(rotY, (iAV * multiplyByFloat(rotY, dTime)));
+
+        float newY = Mathf.Acos(newRotX.m00);
 
         Matrix4x4 rotZ = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.z), Mathf.Sin(eulerRotations.z), 0f, 0f),
                                        new Vector4(-Mathf.Sin(eulerRotations.z), Mathf.Cos(eulerRotations.z), 0f, 0f),
                                        new Vector4(0f, 0f, 1f, 0f),
                                        new Vector4(0f, 0f, 0f, 1f));
 
+        Matrix4x4 newRotZ = matrixAddition(rotZ, (iAV * multiplyByFloat(rotZ, dTime)));
 
+        float newZ = Mathf.Acos(newRotX.m00);
 
-        return Vector3();
+        return new Vector3(newX, newY, newZ);
     }
 
 
@@ -156,15 +169,14 @@ public class Rotational_Movement : MonoBehaviour {
         Vector4 columnA = mat.GetColumn(0) * f;
         Vector4 columnB = mat.GetColumn(1) * f;
         Vector4 columnC = mat.GetColumn(2) * f;
+        Vector4 columnD = mat.GetColumn(3) * f;
         
-        return new Matrix4x4(columnA, columnB, columnC, mat.GetColumn(3));
+        return new Matrix4x4(columnA, columnB, columnC, columnD);
     }
 
     public Matrix4x4 matrixAddition(Matrix4x4 mat1, Matrix4x4 mat2)
     {
-        Vector4 columnZero = new Vector4(0f, 0f, 0f, 1f);
-
-        return new Matrix4x4(mat1.GetColumn(0) + mat2.GetColumn(0), mat1.GetColumn(1) + mat2.GetColumn(1), mat1.GetColumn(2) + mat2.GetColumn(2), columnZero);
+        return new Matrix4x4(mat1.GetColumn(0) + mat2.GetColumn(0), mat1.GetColumn(1) + mat2.GetColumn(1), mat1.GetColumn(2) + mat2.GetColumn(2), mat1.GetColumn(3) + mat2.GetColumn(3));
     }
 
     public Vector3 toEuler(Matrix4x4 mat)
