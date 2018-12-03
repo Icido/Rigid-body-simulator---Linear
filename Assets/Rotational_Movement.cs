@@ -19,6 +19,8 @@ public class Rotational_Movement : MonoBehaviour {
 
     public float inertiaTensorEquation;
 
+    public float inverseInertiaTensorEquation;
+
     public Vector3 torque;
     public float leverArm;
     public Vector3 leverArmVec3;
@@ -65,9 +67,11 @@ public class Rotational_Movement : MonoBehaviour {
         //Should do switch case for each interia tensor, but since we have one, it's simple
         inertiaTensorEquation = ((2 / 5) * mass * radius * radius);
 
-        InertiaTensor = new Matrix4x4(new Vector4(inertiaTensorEquation, 0f, 0f, 0f),
-                                      new Vector4(0f, inertiaTensorEquation, 0f, 0f),
-                                      new Vector4(0f, 0f, inertiaTensorEquation, 0f),
+        inverseInertiaTensorEquation = 1 / inertiaTensorEquation;
+
+        InertiaTensor = new Matrix4x4(new Vector4(inverseInertiaTensorEquation, 0f, 0f, 0f),
+                                      new Vector4(0f, inverseInertiaTensorEquation, 0f, 0f),
+                                      new Vector4(0f, 0f, inverseInertiaTensorEquation, 0f),
                                       new Vector4(0f, 0f, 0f, 1f));
 
 
@@ -99,6 +103,28 @@ public class Rotational_Movement : MonoBehaviour {
 
         transform.Rotate(toEuler(angularRotationMat));
 
+    }
+
+    public Vector3 rotationCalculation(Vector3 eulerRotations, float dTime, Matrix4x4 iAV)
+    {
+        Matrix4x4 rotX = new Matrix4x4(new Vector4(1f, 0f, 0f, 0f),
+                                       new Vector4(0f, Mathf.Cos(eulerRotations.x), Mathf.Sin(eulerRotations.x), 0f),
+                                       new Vector4(0f, -Mathf.Sin(eulerRotations.x), Mathf.Cos(eulerRotations.x), 0f),
+                                       new Vector4(0f, 0f, 0f, 1f));
+
+        Matrix4x4 rotY = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.y), 0f, -Mathf.Sin(eulerRotations.y), 0f),
+                                       new Vector4(0f, 1f, 0f, 0f),
+                                       new Vector4(Mathf.Sin(eulerRotations.y), 0f, Mathf.Cos(eulerRotations.y), 0f),
+                                       new Vector4(0f, 0f, 0f, 1f));
+
+        Matrix4x4 rotZ = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.z), Mathf.Sin(eulerRotations.z), 0f, 0f),
+                                       new Vector4(-Mathf.Sin(eulerRotations.z), Mathf.Cos(eulerRotations.z), 0f, 0f),
+                                       new Vector4(0f, 0f, 1f, 0f),
+                                       new Vector4(0f, 0f, 0f, 1f));
+
+
+
+        return Vector3();
     }
 
 
