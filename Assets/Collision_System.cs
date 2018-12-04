@@ -90,6 +90,7 @@ public class Collision_System : MonoBehaviour {
         collidingWith.Clear();
         collisionNormals.Clear();
 
+
         if (colType == CollisionType.AABB)
         {
             minAABBx = this.transform.position.x - (this.transform.localScale.x / 2f);

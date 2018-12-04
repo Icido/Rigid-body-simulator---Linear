@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Rotational_Movement : MonoBehaviour {
 
+    public float punchingForce = 10f;
+
     public float mass;
     public float radius;
 
@@ -58,9 +60,9 @@ public class Rotational_Movement : MonoBehaviour {
 
         
         if (Input.GetKey(KeyCode.K))
-            force = new Vector3(0f, 10f, 0f);
+            force = new Vector3(0f, punchingForce, 0f);
         else if (Input.GetKey(KeyCode.L))
-            force = new Vector3(0f, -10f, 0f);
+            force = new Vector3(0f, -punchingForce, 0f);
         else
             force = new Vector3();
 
@@ -114,6 +116,8 @@ public class Rotational_Movement : MonoBehaviour {
         
         transform.Rotate(rotationCalculation(angularRotation, deltaTime, inverseAngularVelocity));
 
+        angularMomentum /= 2f;
+
         if (angularRotation != transform.rotation.eulerAngles)
         {
             Debug.Log("Pre: " + angularRotation);
@@ -142,7 +146,7 @@ public class Rotational_Movement : MonoBehaviour {
 
 
 
-        float newY = Mathf.Acos(Mathf.Clamp(newRotX.m00, -1, 1));
+        float newY = Mathf.Acos(Mathf.Clamp(newRotY.m00, -1, 1));
 
         Matrix4x4 rotZ = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.z), Mathf.Sin(eulerRotations.z), 0f, 0f),
                                        new Vector4(-Mathf.Sin(eulerRotations.z), Mathf.Cos(eulerRotations.z), 0f, 0f),
