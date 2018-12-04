@@ -7,23 +7,27 @@ public class Rotational_Movement : MonoBehaviour {
 
     public float mass;
     public float radius;
+
     public Vector3 force;
 
-    public Vector3 angularRotation;
-    public Vector3 angularVelocity;
-    public Vector3 angularMomentum;
-
-    public Matrix4x4 inverseAngularVelocity;
-
-    public Matrix4x4 angularRotationMat;
-
-    public float inertiaTensorEquation;
-
-    public float inverseInertiaTensorEquation;
-
-    public Vector3 torque;
     public float leverArm;
     public Vector3 leverArmVec3;
+
+    public Vector3 torque;
+
+    public Vector3 angularMomentum;
+
+    public float inertiaTensorEquation;
+    public float inverseInertiaTensorEquation;
+
+    public Vector3 angularVelocity;
+    private Matrix4x4 inverseAngularVelocity;
+
+    public Vector3 angularRotation;
+    
+    public Matrix4x4 angularRotationMat;
+
+
 
     [SerializeField]
     private MomentOfInertia InertiaType;
@@ -52,11 +56,21 @@ public class Rotational_Movement : MonoBehaviour {
         leverArmVec3 = new Vector3(leverArm, leverArm, leverArm);
 
 
-
+        
         if (Input.GetKey(KeyCode.K))
             force = new Vector3(0f, 10f, 0f);
+        else if (Input.GetKey(KeyCode.L))
+            force = new Vector3(0f, -10f, 0f);
         else
-            force = new Vector3(0f, 0f, 0f);
+            force = new Vector3();
+
+        if (Input.GetKey(KeyCode.R))
+            angularMomentum = new Vector3();
+        
+        /*
+        if (GetComponent<Object_Movement>().isMovingOnGround)
+            force = GetComponent<Object_Movement>().resultantForce;
+        */
 
         torque = Vector3.Cross(force, leverArmVec3);
 
@@ -65,7 +79,7 @@ public class Rotational_Movement : MonoBehaviour {
         angularMomentum += (torque * deltaTime);
 
         //Should do switch case for each interia tensor, but since we have one, it's simple
-        inertiaTensorEquation = ((2 / 5) * mass * radius * radius);
+        inertiaTensorEquation = (mass * radius * radius) * 0.4f;
 
         inverseInertiaTensorEquation = 1 / inertiaTensorEquation;
 
@@ -88,24 +102,23 @@ public class Rotational_Movement : MonoBehaviour {
                                                new Vector4(0f, 0f, 0f, 1f));
 
 
-        Quaternion quats = transform.rotation;
-        Vector3 eulerA = quats.eulerAngles;
-        //Debug.Log(eulerA);
-
+        angularRotation = transform.rotation.eulerAngles;
+        
         //Take current rotation of object and convert to 3x3
-        /*
-        angularRotationMat = to4x4Matrix(eulerA);
 
-        Matrix4x4 tempMat = multiplyByFloat(angularRotationMat, deltaTime);
+        //angularRotationMat = to4x4Matrix(eulerA);
+        //Matrix4x4 tempMat = multiplyByFloat(angularRotationMat, deltaTime);
+        //Matrix4x4 tempMat2 = inverseAngularVelocity * tempMat;
+        //angularRotationMat = matrixAddition(angularRotationMat, tempMat2);
+        //transform.Rotate(toEuler(angularRotationMat));
+        
+        transform.Rotate(rotationCalculation(angularRotation, deltaTime, inverseAngularVelocity));
 
-        Matrix4x4 tempMat2 = inverseAngularVelocity * tempMat;
-
-        angularRotationMat = matrixAddition(angularRotationMat, tempMat2);
-
-        transform.Rotate(toEuler(angularRotationMat));
-        */
-
-        transform.Rotate(rotationCalculation(eulerA, deltaTime, inverseAngularVelocity));
+        if (angularRotation != transform.rotation.eulerAngles)
+        {
+            Debug.Log("Pre: " + angularRotation);
+            Debug.Log("Post: " + transform.rotation.eulerAngles);
+        }
     }
 
     public Vector3 rotationCalculation(Vector3 eulerRotations, float dTime, Matrix4x4 iAV)
@@ -117,7 +130,8 @@ public class Rotational_Movement : MonoBehaviour {
 
         Matrix4x4 newRotX = matrixAddition(rotX, (iAV * multiplyByFloat(rotX, dTime)));
 
-        float newX = Mathf.Acos(newRotX.m11);
+        float newX = Mathf.Acos(Mathf.Clamp(newRotX.m11, -1, 1));
+
 
         Matrix4x4 rotY = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.y), 0f, -Mathf.Sin(eulerRotations.y), 0f),
                                        new Vector4(0f, 1f, 0f, 0f),
@@ -126,7 +140,9 @@ public class Rotational_Movement : MonoBehaviour {
 
         Matrix4x4 newRotY = matrixAddition(rotY, (iAV * multiplyByFloat(rotY, dTime)));
 
-        float newY = Mathf.Acos(newRotX.m00);
+
+
+        float newY = Mathf.Acos(Mathf.Clamp(newRotX.m00, -1, 1));
 
         Matrix4x4 rotZ = new Matrix4x4(new Vector4(Mathf.Cos(eulerRotations.z), Mathf.Sin(eulerRotations.z), 0f, 0f),
                                        new Vector4(-Mathf.Sin(eulerRotations.z), Mathf.Cos(eulerRotations.z), 0f, 0f),
@@ -135,7 +151,14 @@ public class Rotational_Movement : MonoBehaviour {
 
         Matrix4x4 newRotZ = matrixAddition(rotZ, (iAV * multiplyByFloat(rotZ, dTime)));
 
-        float newZ = Mathf.Acos(newRotX.m00);
+        float newZ = Mathf.Acos(Mathf.Clamp(newRotZ.m00, -1, 1));
+
+        //Debug.Log("Old x: " + newRotX.m11);
+        //Debug.Log("New clamped x: " + Mathf.Clamp(newRotX.m11, -1, 1));
+        //Debug.Log("Old y: " + newRotY.m00);
+        //Debug.Log("New clamped y: " + Mathf.Clamp(newRotY.m00, -1, 1));
+        //Debug.Log("Old z: " + newRotZ.m00);
+        //Debug.Log("New clamped z: " + Mathf.Clamp(newRotZ.m00, -1, 1));
 
         return new Vector3(newX, newY, newZ);
     }
@@ -196,7 +219,6 @@ public class Rotational_Movement : MonoBehaviour {
 
 
         float x = Mathf.Rad2Deg * Mathf.Asin(-mat.GetColumn(1).y);
-            
 
         return new Vector3(x, y, z);
     }

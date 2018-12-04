@@ -51,6 +51,9 @@ public class Collision_System : MonoBehaviour {
     //This list is used to store all those objects this object is currently colliding with.
     [SerializeField]
     private List<GameObject> collidingWith = new List<GameObject>();
+
+    [SerializeField]
+    private List<Vector3> collisionNormals = new List<Vector3>();
     
     // Use this for initialization
 	void Start () {
@@ -85,6 +88,7 @@ public class Collision_System : MonoBehaviour {
     void Update() {
 
         collidingWith.Clear();
+        collisionNormals.Clear();
 
         if (colType == CollisionType.AABB)
         {
@@ -101,17 +105,28 @@ public class Collision_System : MonoBehaviour {
         {
             Collision_System thisCollider = collider.GetComponent<Collision_System>();
 
+            #region Sphere_Collision_Test
+
             if (this.colType == CollisionType.Sphere && thisCollider.colType == CollisionType.Sphere)
             {
-                float range = Vector3.Distance(collider.transform.position, transform.position);
-
-                if (range < (thisCollider.sphereRadius + sphereRadius))
+                if (Vector3.Distance(collider.transform.position, transform.position) < (thisCollider.sphereRadius + sphereRadius))
                 {
                     collidingWith.Add(collider);
+
+                    collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
+
+                    Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
+                    Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
+
+                    recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
                 }
             }
 
-            if(this.colType == CollisionType.AABB && thisCollider.colType == CollisionType.AABB)
+            #endregion
+
+            #region AABB_Collision_Tests
+
+            if (this.colType == CollisionType.AABB && thisCollider.colType == CollisionType.AABB)
             {
                 if( (minAABBx > thisCollider.maxAABBx) || (thisCollider.minAABBx > maxAABBx) ||
                     (minAABBy > thisCollider.maxAABBy) || (thisCollider.minAABBy > maxAABBy) ||
@@ -166,8 +181,6 @@ public class Collision_System : MonoBehaviour {
                     {
                         separatingPlane = SeparatingPlane.Back;
                     }
-
-
                 }
 
                 if ((minAABBx <= thisCollider.maxAABBx) && (thisCollider.minAABBx <= maxAABBx) &&
@@ -176,9 +189,10 @@ public class Collision_System : MonoBehaviour {
                 {
                     //Is intersecting
                     collidingWith.Add(collider);
+                    GetComponent<Object_Movement>().currentPosition = GetComponent<Object_Movement>().previousPosition;
                 }
 
-
+                #endregion
 
             }
 
@@ -196,18 +210,20 @@ public class Collision_System : MonoBehaviour {
             {
                 if (!this.hasImpulsed && !collider.GetComponent<Collision_System>().hasImpulsed)
                 {
+                    Vector3 norm = collisionNormals[collidingWith.IndexOf(collider)];
+
                     //Find impulse J
-                    var imp1 = (-(this.GetComponent<Object_Movement>().velocity.x - collider.GetComponent<Object_Movement>().velocity.x) * (coefficientOfRestitution + 1));
+                    float imp1 = Vector3.Dot((-(this.GetComponent<Object_Movement>().velocity - collider.GetComponent<Object_Movement>().velocity) * (coefficientOfRestitution + 1)), norm);
 
-                    var imp2 = ((1 / this.GetComponent<Object_Movement>().mass) + (1 / collider.GetComponent<Object_Movement>().mass));
+                    float imp2 = ((1 / this.GetComponent<Object_Movement>().mass) + (1 / collider.GetComponent<Object_Movement>().mass));
 
-                    var impulse = imp1 / imp2;
+                    float impulse = imp1 / imp2;
 
                     //This new velocity
 
-                    this.GetComponent<Object_Movement>().velocity.x = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.x;
+                    this.GetComponent<Object_Movement>().velocity = ((impulse / this.GetComponent<Object_Movement>().mass) * norm) + this.GetComponent<Object_Movement>().velocity;
 
-                    collider.GetComponent<Object_Movement>().velocity.x = (-impulse / collider.GetComponent<Object_Movement>().mass) + collider.GetComponent<Object_Movement>().velocity.x;
+                    collider.GetComponent<Object_Movement>().velocity = ((-impulse / collider.GetComponent<Object_Movement>().mass) * norm) + collider.GetComponent<Object_Movement>().velocity;
 
 
                     hasImpulsed = true;
@@ -218,6 +234,7 @@ public class Collision_System : MonoBehaviour {
                 }
             }
         }
+
         hasImpulsed = false;
 
 
@@ -234,7 +251,17 @@ public class Collision_System : MonoBehaviour {
 
     }
 
+    public void recursiveStepBack(GameObject objectCollidingWith, Collision_System objectCollision, Vector3 collidingPositionMinus, Vector3 myPositionMinus)
+    {
+        objectCollidingWith.transform.Translate(collidingPositionMinus);
+        this.transform.Translate(myPositionMinus);
 
+
+        if (Vector3.Distance(objectCollidingWith.transform.position, transform.position) < (objectCollision.sphereRadius + sphereRadius))
+            recursiveStepBack(objectCollidingWith, objectCollision, collidingPositionMinus, myPositionMinus);
+        else
+            return;
+    }
 
 
     private void OnDrawGizmos()

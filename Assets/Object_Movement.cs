@@ -9,6 +9,7 @@ public class Object_Movement : MonoBehaviour
     public float staticFriction;
     public float kineticFriction;
     public float mass;
+    public Vector3 previousPosition;
     public Vector3 velocity;
     public Vector3 currentPosition;
     public Vector3 appliedForce;
@@ -28,7 +29,7 @@ public class Object_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        previousPosition = currentPosition;
         float weight = mass * gravity;
         reactionForce = 0f;
         resultantForce = new Vector3(0,0,0);
