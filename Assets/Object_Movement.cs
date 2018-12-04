@@ -18,7 +18,7 @@ public class Object_Movement : MonoBehaviour
     public bool isMovingOnGround = false;
 
     public int leniancy = 10;
-
+    
 
     // Use this for initialization
     void Start()
@@ -29,7 +29,6 @@ public class Object_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        previousPosition = currentPosition;
         float weight = mass * gravity;
         reactionForce = 0f;
         resultantForce = new Vector3(0,0,0);
@@ -69,6 +68,7 @@ public class Object_Movement : MonoBehaviour
             //currentPosition = this.transform.position;
             velocity += ((resultantForce / mass) * deltaTime);
             this.transform.position += (velocity * deltaTime);
+            previousPosition = currentPosition;
             currentPosition = this.transform.position;
 
         }
@@ -110,6 +110,7 @@ public class Object_Movement : MonoBehaviour
             //until it collides with the floor
 
             this.transform.position += (velocity * deltaTime);
+            previousPosition = currentPosition;
             currentPosition = this.transform.position;
             //currentPosition += suvatDisplacement(velocity, , deltaTime);
         }

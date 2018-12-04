@@ -101,103 +101,105 @@ public class Collision_System : MonoBehaviour {
         }
 
         //Checking through all the collidable objects in the scene (may get expensive, could limit to things within range
-        foreach (GameObject collider in collidableObjects)
+        foreach (GameObject otherCollider in collidableObjects)
         {
-            Collision_System thisCollider = collider.GetComponent<Collision_System>();
-
-            #region Sphere_Collision_Test
-
-            if (this.colType == CollisionType.Sphere && thisCollider.colType == CollisionType.Sphere)
+            foreach (GameObject collider in collidableObjects)
             {
-                if (Vector3.Distance(collider.transform.position, transform.position) < (thisCollider.sphereRadius + sphereRadius))
+                Collision_System thisCollider = collider.GetComponent<Collision_System>();
+
+                #region Sphere_Collision_Test
+
+                if (this.colType == CollisionType.Sphere && thisCollider.colType == CollisionType.Sphere)
                 {
-                    collidingWith.Add(collider);
-
-                    collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
-
-                    Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
-                    Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
-
-                    recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
-                }
-            }
-
-            #endregion
-
-            #region AABB_Collision_Tests
-
-            if (this.colType == CollisionType.AABB && thisCollider.colType == CollisionType.AABB)
-            {
-                if( (minAABBx > thisCollider.maxAABBx) || (thisCollider.minAABBx > maxAABBx) ||
-                    (minAABBy > thisCollider.maxAABBy) || (thisCollider.minAABBy > maxAABBy) ||
-                    (minAABBz > thisCollider.maxAABBz) || (thisCollider.minAABBz > maxAABBz))
-                {
-                    //Check closest plane and store locally
-                    float centresDistance = Vector3.Distance(this.transform.position, thisCollider.transform.position);
-
-                    separatingPlane = SeparatingPlane.NULL;
-
-                    if( Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) || 
-                        Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
-                        Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
-                        Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
-                        Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
+                    if (Vector3.Distance(collider.transform.position, transform.position) < (thisCollider.sphereRadius + sphereRadius))
                     {
-                        separatingPlane = SeparatingPlane.Right;
-                    }
-                    else if (Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
-                        Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
-                        Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
-                        Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
-                        Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
-                    {
-                        separatingPlane = SeparatingPlane.Left;
-                    }
-                    else if (Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
-                        Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
-                        Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
-                        Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
-                        Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
-                    {
-                        separatingPlane = SeparatingPlane.Bottom;
-                    }
-                    else if (Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
-                        Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
-                        Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
-                        Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
-                        Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
-                    {
-                        separatingPlane = SeparatingPlane.Top;
-                    }
-                    else if (Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
-                        Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
-                        Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
-                        Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
-                        Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
-                    {
-                        separatingPlane = SeparatingPlane.Front;
-                    }
-                    else
-                    {
-                        separatingPlane = SeparatingPlane.Back;
-                    }
-                }
+                        collidingWith.Add(collider);
 
-                if ((minAABBx <= thisCollider.maxAABBx) && (thisCollider.minAABBx <= maxAABBx) &&
-                    (minAABBy <= thisCollider.maxAABBy) && (thisCollider.minAABBy <= maxAABBy) &&
-                    (minAABBz <= thisCollider.maxAABBz) && (thisCollider.minAABBz <= maxAABBz))
-                {
-                    //Is intersecting
-                    collidingWith.Add(collider);
-                    GetComponent<Object_Movement>().currentPosition = GetComponent<Object_Movement>().previousPosition;
+                        collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
+
+                        Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
+                        Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
+
+                        recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
+                    }
                 }
 
                 #endregion
 
+                #region AABB_Collision_Tests
+
+                if (this.colType == CollisionType.AABB && thisCollider.colType == CollisionType.AABB)
+                {
+                    if ((minAABBx > thisCollider.maxAABBx) || (thisCollider.minAABBx > maxAABBx) ||
+                        (minAABBy > thisCollider.maxAABBy) || (thisCollider.minAABBy > maxAABBy) ||
+                        (minAABBz > thisCollider.maxAABBz) || (thisCollider.minAABBz > maxAABBz))
+                    {
+                        //Check closest plane and store locally
+                        float centresDistance = Vector3.Distance(this.transform.position, thisCollider.transform.position);
+
+                        separatingPlane = SeparatingPlane.NULL;
+
+                        if (Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
+                            Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
+                            Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
+                            Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
+                            Mathf.Abs((minAABBx - thisCollider.maxAABBx)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
+                        {
+                            separatingPlane = SeparatingPlane.Right;
+                        }
+                        else if (Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
+                            Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
+                            Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
+                            Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
+                            Mathf.Abs((thisCollider.minAABBx - maxAABBx)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
+                        {
+                            separatingPlane = SeparatingPlane.Left;
+                        }
+                        else if (Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
+                            Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
+                            Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
+                            Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
+                            Mathf.Abs((minAABBy - thisCollider.maxAABBy)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
+                        {
+                            separatingPlane = SeparatingPlane.Bottom;
+                        }
+                        else if (Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
+                            Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
+                            Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
+                            Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((minAABBz - thisCollider.maxAABBz)) ||
+                            Mathf.Abs((thisCollider.minAABBy - maxAABBy)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
+                        {
+                            separatingPlane = SeparatingPlane.Top;
+                        }
+                        else if (Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((minAABBx - thisCollider.maxAABBx)) ||
+                            Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((thisCollider.minAABBx - maxAABBx)) ||
+                            Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((minAABBy - thisCollider.maxAABBy)) ||
+                            Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((thisCollider.minAABBy - maxAABBy)) ||
+                            Mathf.Abs((minAABBz - thisCollider.maxAABBz)) > Mathf.Abs((thisCollider.minAABBz - maxAABBz)))
+                        {
+                            separatingPlane = SeparatingPlane.Front;
+                        }
+                        else
+                        {
+                            separatingPlane = SeparatingPlane.Back;
+                        }
+                    }
+
+                    if ((minAABBx <= thisCollider.maxAABBx) && (thisCollider.minAABBx <= maxAABBx) &&
+                        (minAABBy <= thisCollider.maxAABBy) && (thisCollider.minAABBy <= maxAABBy) &&
+                        (minAABBz <= thisCollider.maxAABBz) && (thisCollider.minAABBz <= maxAABBz))
+                    {
+                        //Is intersecting
+                        collidingWith.Add(collider);
+                        GetComponent<Object_Movement>().currentPosition = GetComponent<Object_Movement>().previousPosition;
+                    }
+
+                    #endregion
+
+                }
+
             }
-
         }
-
         //If any object collided with this object, it will switch the boolean to true
         if (collidingWith.Count > 0)
             isColliding = true;
