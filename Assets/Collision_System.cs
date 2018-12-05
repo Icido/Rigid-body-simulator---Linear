@@ -192,11 +192,65 @@ public class Collision_System : MonoBehaviour {
                 {
                     //Is intersecting
                     collidingWith.Add(collider);
-                    GetComponent<Object_Movement>().currentPosition = GetComponent<Object_Movement>().previousPosition;
+                    collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
+
+                    Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
+                    Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
+
+                    recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
                 }
             }
 
             #endregion
+
+            #region Sphere-AABB_Collision_Tests
+
+            if (this.colType == CollisionType.Sphere && thisCollider.colType == CollisionType.AABB)
+            {
+                Vector3 normanL = Vector3.Normalize(collider.transform.position - transform.position);
+                Vector3 sphereChecker = this.transform.position + (normanL * this.sphereRadius);
+
+                if ((sphereChecker.x <= thisCollider.maxAABBx) && (thisCollider.minAABBx <= sphereChecker.x) &&
+                    (sphereChecker.y <= thisCollider.maxAABBy) && (thisCollider.minAABBy <= sphereChecker.y) &&
+                    (sphereChecker.z <= thisCollider.maxAABBz) && (thisCollider.minAABBz <= sphereChecker.z))
+                {
+                    collidingWith.Add(collider);
+
+                    collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
+
+                    Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
+                    Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
+
+                    recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
+                }
+            }
+
+            #endregion
+
+            #region AABB-Sphere_Collision_Tests
+
+            if (this.colType == CollisionType.AABB && thisCollider.colType == CollisionType.Sphere)
+            {
+                Vector3 normanL = Vector3.Normalize(collider.transform.position - transform.position);
+                Vector3 sphereChecker = thisCollider.transform.position + (normanL * thisCollider.sphereRadius);
+
+                if ((minAABBx <= sphereChecker.x) && (sphereChecker.x <= maxAABBx) &&
+                    (minAABBy <= sphereChecker.y) && (sphereChecker.y <= maxAABBy) &&
+                    (minAABBz <= sphereChecker.z) && (sphereChecker.z <= maxAABBz))
+                {
+                    collidingWith.Add(collider);
+
+                    collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
+
+                    Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
+                    Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
+
+                    recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
+                }
+            }
+
+            #endregion
+
 
         }
 

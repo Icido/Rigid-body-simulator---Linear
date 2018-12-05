@@ -27,6 +27,8 @@ public class Object_Selection : MonoBehaviour {
 
         sceneView = SceneView.currentDrawingSceneView;
 
+        gameObjectName.text = "Hello";
+
         if (isSelected)
         {
             gameObjectName.text = "Current selected object: " + storedGameObject.name;
