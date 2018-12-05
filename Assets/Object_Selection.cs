@@ -78,11 +78,12 @@ public class Object_Selection : MonoBehaviour {
 
     void OnSceneGUI(SceneView view)
     {
-        Event e = Event.current;
+        Event e = new Event();
+        e = Event.current;
+        Debug.Log(e);
         if (e != null)
         {
-            Vector2 mousePos = new Vector2(e.mousePosition.x, e.mousePosition.y);
-            storedGameObject = HandleUtility.PickGameObject(mousePos, true);
+            storedGameObject = HandleUtility.PickGameObject(e.mousePosition, true);
 
             Debug.Log(storedGameObject);
         }

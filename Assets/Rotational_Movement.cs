@@ -120,8 +120,8 @@ public class Rotational_Movement : MonoBehaviour {
 
         if (angularRotation != transform.rotation.eulerAngles)
         {
-            Debug.Log("Pre: " + angularRotation);
-            Debug.Log("Post: " + transform.rotation.eulerAngles);
+            //Debug.Log("Pre: " + angularRotation);
+            //Debug.Log("Post: " + transform.rotation.eulerAngles);
         }
     }
 
