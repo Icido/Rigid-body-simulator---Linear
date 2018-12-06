@@ -10,12 +10,15 @@ public class Object_Selection : MonoBehaviour {
 
     public bool isSelecting = false;
     private GameObject storedGameObject;
-    private SceneView sceneView;
+    //private SceneView sceneView;
+    public Vector3 hitPoint = new Vector3();
 
     public Text gameObjectName;
     public Text gameObjectPosition;
     public Text gameObjectVelocity;
     public Text gameObjectRotation;
+    public Text gameObjectHasCollided;
+    public Text springLauncherAngle;
 
 
     private List<GameObject> objectList = new List<GameObject>();
@@ -24,12 +27,14 @@ public class Object_Selection : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        sceneView = ScriptableObject.CreateInstance<SceneView>();
+        //sceneView = ScriptableObject.CreateInstance<SceneView>();
         gameObjectName.text = "";
         gameObjectPosition.text = "";
         gameObjectVelocity.text = "";
         gameObjectRotation.text = "";
-        
+        gameObjectHasCollided.text = "";
+        springLauncherAngle.text = "";
+
         foreach (GameObject go in Object.FindObjectsOfType(typeof(GameObject)))
         {
             if(go.tag == "SelectableObject" && go.activeInHierarchy)
@@ -44,7 +49,7 @@ public class Object_Selection : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        sceneView = SceneView.currentDrawingSceneView;
+        //sceneView = SceneView.currentDrawingSceneView;
 
         if (isSelecting)
         {
@@ -52,8 +57,12 @@ public class Object_Selection : MonoBehaviour {
             gameObjectPosition.text = "Current position: " + storedGameObject.GetComponent<Object_Movement>().currentPosition;
             gameObjectVelocity.text = "Current velocity: " + storedGameObject.GetComponent<Object_Movement>().velocity;
             gameObjectRotation.text = "Current rotation: " + storedGameObject.transform.rotation.eulerAngles;
-            Debug.Log("Display!");
+            gameObjectHasCollided.text = "Has recently collided: " + storedGameObject.GetComponent<Collision_System>().isColliding;
 
+            if (storedGameObject.GetComponent<Spring_launcher>())
+                springLauncherAngle.text = "Launch angle: " + storedGameObject.GetComponent<Spring_launcher>().launch_angle;
+            else
+                springLauncherAngle.text = "Does not have spring launcher attached.";
         }
         else
         {
@@ -61,54 +70,24 @@ public class Object_Selection : MonoBehaviour {
             gameObjectPosition.text = "";
             gameObjectVelocity.text = "";
             gameObjectRotation.text = "";
-            Debug.Log("No display!");
+            gameObjectHasCollided.text = "";
+            springLauncherAngle.text = "";
         }
 
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Fire!");
+            var plane = new Plane(Vector3.up, transform.position);
 
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+            float distance;
 
-
-
-
-
-
-
-
-
-
-
-            //OnSceneGUI(sceneView);
-
-            /*
-            RaycastHit hitInformation = new RaycastHit();
-            Debug.Log(hitInformation);
-
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInformation);
-
-            //Debug.Log(Camera.main.ScreenPointToRay(Input.mousePosition));
-            Debug.Log(hitInformation);
-            if (hit)
+            if(plane.Raycast(ray, out distance))
             {
-                if(hitInformation.transform.gameObject.tag == "PhysicsObject")
-                {
-                    isSelected = true;
-                    Debug.Log("Hit!");
-                    storedGameObject = hitInformation.transform.gameObject;
-                }
+                hitPoint = ray.GetPoint(distance);
             }
-            else
-            {
-                Debug.Log("And then I missed...");
-            }
-            */
-
             
-
-
         }
 
         if (Input.GetKeyUp(KeyCode.I))
@@ -132,10 +111,7 @@ public class Object_Selection : MonoBehaviour {
             {
                 storedGameObject = objectList[objectList.IndexOf(storedGameObject) + 1];
             }
-
         }
-
-
     }
 
 

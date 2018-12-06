@@ -18,6 +18,7 @@ public class Object_Movement : MonoBehaviour
     public bool isMovingOnGround = false;
 
     private bool paused = false;
+    private bool resetPause = false;
 
     public int leniancy = 10;
 
@@ -45,7 +46,10 @@ public class Object_Movement : MonoBehaviour
             paused = !paused;
 
         if (Input.GetKeyUp(KeyCode.N))
-            paused = !paused;
+        {
+            paused = false;
+            resetPause = true;
+        }
 
         if (!paused)
         {
@@ -57,10 +61,15 @@ public class Object_Movement : MonoBehaviour
             {
                 if (GetComponent<Spring_launcher>().spring_force != 0)
                 {
-                    float angle = GetComponent<Spring_launcher>().launch_angle * Mathf.Deg2Rad;
+                    float launchAngle = GetComponent<Spring_launcher>().launch_angle * Mathf.Deg2Rad;
                     float force = GetComponent<Spring_launcher>().spring_force;
+                    Vector3 hitVec = GetComponent<Spring_launcher>().hit_vector;
 
-                    resultantForce += new Vector3(force * Mathf.Cos(angle), force * Mathf.Sin(angle), 0);
+                    Vector3 tempPos = new Vector3(transform.position.x, 0, transform.position.z);
+
+                    float hitAngle = (Vector3.Angle(tempPos, hitVec) * Mathf.Deg2Rad);
+                    Debug.Log(this.name + " " + hitAngle);
+                    resultantForce += new Vector3(force * Mathf.Sin(hitAngle) * Mathf.Cos(launchAngle), force * Mathf.Sin(launchAngle), force * Mathf.Cos(hitAngle) * Mathf.Cos(launchAngle));
 
                     this.GetComponent<Spring_launcher>().spring_force = 0;
                 }
@@ -135,6 +144,13 @@ public class Object_Movement : MonoBehaviour
                 //currentPosition += suvatDisplacement(velocity, , deltaTime);
             }
         }
+
+        if (resetPause)
+        {
+            paused = true;
+            resetPause = false;
+        }
+        
     }
 
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Collision_System : MonoBehaviour {
 
-    [SerializeField]
-    private bool isColliding;
+    public bool isColliding;
     
     public float coefficientOfRestitution;
     [SerializeField]
@@ -118,8 +117,7 @@ public class Collision_System : MonoBehaviour {
 
                     collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
 
-                    if (collider.GetComponent<Object_Movement>().previousPosition != null && GetComponent<Object_Movement>().previousPosition != null &&
-                        collider.GetComponent<Object_Movement>().previousPosition != collider.GetComponent<Object_Movement>().currentPosition && 
+                    if (collider.GetComponent<Object_Movement>().previousPosition != collider.GetComponent<Object_Movement>().currentPosition && 
                         GetComponent<Object_Movement>().previousPosition != GetComponent<Object_Movement>().currentPosition)
                     {
                         Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
@@ -258,6 +256,8 @@ public class Collision_System : MonoBehaviour {
 
         }
 
+        #region Impulse_Method
+
         //If any object collided with this object, it will switch the boolean to true
         if (collidingWith.Count > 0)
             isColliding = true;
@@ -297,8 +297,12 @@ public class Collision_System : MonoBehaviour {
 
         hasImpulsed = false;
 
+        #endregion
 
-        if(transform.position.y < transform.localScale.y)
+        //Rebounds off of the ground to prevent falling through the "ground"
+        #region Ground_Plane_Impulse
+
+        if (transform.position.y < transform.localScale.y)
         {
             var imp1 = (-(this.GetComponent<Object_Movement>().velocity.y) * (coefficientOfRestitution + 1));
             var imp2 = (1 / this.GetComponent<Object_Movement>().mass);
@@ -307,6 +311,57 @@ public class Collision_System : MonoBehaviour {
             this.GetComponent<Object_Movement>().velocity.y = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.y;
 
         }
+
+        #endregion
+
+        //These checks are just to keep the objects within the area, as regular bounding boxes surrounding it were breaking the entirety of scene
+        #region Containment_Box_Impulses
+
+        if (transform.position.x < (transform.localScale.x - 50))
+        {
+            transform.position = new Vector3(transform.position.x + 0.2f, transform.position.y, transform.position.z);
+
+            var imp1 = (-(this.GetComponent<Object_Movement>().velocity.x) * (coefficientOfRestitution + 1));
+            var imp2 = (1 / this.GetComponent<Object_Movement>().mass);
+            var impulse = imp1 / imp2;
+
+            this.GetComponent<Object_Movement>().velocity.x = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.x;
+        }
+
+        if (transform.position.x > (50 - transform.localScale.x))
+        {
+            transform.position = new Vector3(transform.position.x - 0.2f, transform.position.y, transform.position.z);
+
+            var imp1 = (-(this.GetComponent<Object_Movement>().velocity.x) * (coefficientOfRestitution + 1));
+            var imp2 = (1 / this.GetComponent<Object_Movement>().mass);
+            var impulse = imp1 / imp2;
+
+            this.GetComponent<Object_Movement>().velocity.x = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.x;
+        }
+
+        if (transform.position.z < (transform.localScale.z - 25))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.2f);
+
+            var imp1 = (-(this.GetComponent<Object_Movement>().velocity.z) * (coefficientOfRestitution + 1));
+            var imp2 = (1 / this.GetComponent<Object_Movement>().mass);
+            var impulse = imp1 / imp2;
+
+            this.GetComponent<Object_Movement>().velocity.z = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.z;
+        }
+
+        if (transform.position.z > (25 - transform.localScale.z))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.2f);
+
+            var imp1 = (-(this.GetComponent<Object_Movement>().velocity.z) * (coefficientOfRestitution + 1));
+            var imp2 = (1 / this.GetComponent<Object_Movement>().mass);
+            var impulse = imp1 / imp2;
+
+            this.GetComponent<Object_Movement>().velocity.z = (impulse / this.GetComponent<Object_Movement>().mass) + this.GetComponent<Object_Movement>().velocity.z;
+        }
+
+        #endregion
 
 
     }
@@ -323,6 +378,8 @@ public class Collision_System : MonoBehaviour {
             else
                 return;
         }
+
+        //Boxes aren't always cubes
 
         if (objectCollidingWith.GetComponent<Collision_System>().colType == CollisionType.AABB && colType == CollisionType.AABB)
         {
