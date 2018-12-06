@@ -28,6 +28,7 @@ public class Object_Selection : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //sceneView = ScriptableObject.CreateInstance<SceneView>();
+
         gameObjectName.text = "";
         gameObjectPosition.text = "";
         gameObjectVelocity.text = "";
@@ -58,6 +59,7 @@ public class Object_Selection : MonoBehaviour {
             gameObjectVelocity.text = "Current velocity: " + storedGameObject.GetComponent<Object_Movement>().velocity;
             gameObjectRotation.text = "Current rotation: " + storedGameObject.transform.rotation.eulerAngles;
             gameObjectHasCollided.text = "Has recently collided: " + storedGameObject.GetComponent<Collision_System>().isColliding;
+            
 
             if (storedGameObject.GetComponent<Spring_launcher>())
                 springLauncherAngle.text = "Launch angle: " + storedGameObject.GetComponent<Spring_launcher>().launch_angle;

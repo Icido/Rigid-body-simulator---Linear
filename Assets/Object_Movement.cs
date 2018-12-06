@@ -66,9 +66,12 @@ public class Object_Movement : MonoBehaviour
                     Vector3 hitVec = GetComponent<Spring_launcher>().hit_vector;
 
                     Vector3 tempPos = new Vector3(transform.position.x, 0, transform.position.z);
+                    float dot = Vector3.Dot(transform.right, hitVec - tempPos);
+                    float hitAngle = (Vector3.Angle(transform.forward, hitVec - tempPos) * Mathf.Deg2Rad);
 
-                    float hitAngle = (Vector3.Angle(tempPos, hitVec) * Mathf.Deg2Rad);
-                    Debug.Log(this.name + " " + hitAngle);
+                    if (dot < 0)
+                        hitAngle = -hitAngle;
+
                     resultantForce += new Vector3(force * Mathf.Sin(hitAngle) * Mathf.Cos(launchAngle), force * Mathf.Sin(launchAngle), force * Mathf.Cos(hitAngle) * Mathf.Cos(launchAngle));
 
                     this.GetComponent<Spring_launcher>().spring_force = 0;
