@@ -279,27 +279,20 @@ public class Collision_System : MonoBehaviour {
             {
                 if (!this.hasImpulsed && !collider.GetComponent<Collision_System>().hasImpulsed)
                 {
+                    //Finds the normal that was stored between the two objects
                     Vector3 norm = collisionNormals[collidingWith.IndexOf(collider)];
 
                     //Find impulse J
                     float imp1 = Vector3.Dot((-(this.GetComponent<Object_Movement>().velocity - collider.GetComponent<Object_Movement>().velocity) * (coefficientOfRestitution + 1)), norm);
-
                     float imp2 = ((1 / this.GetComponent<Object_Movement>().mass) + (1 / collider.GetComponent<Object_Movement>().mass));
-
                     float impulse = imp1 / imp2;
 
-                    //This new velocity
-
+                    //This new velocity for each object
                     this.GetComponent<Object_Movement>().velocity = ((impulse / this.GetComponent<Object_Movement>().mass) * norm) + this.GetComponent<Object_Movement>().velocity;
-
                     collider.GetComponent<Object_Movement>().velocity = ((-impulse / collider.GetComponent<Object_Movement>().mass) * norm) + collider.GetComponent<Object_Movement>().velocity;
-
 
                     hasImpulsed = true;
                     collider.GetComponent<Collision_System>().hasImpulsed = true;
-
-
-
                 }
             }
         }

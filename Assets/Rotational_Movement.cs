@@ -44,7 +44,7 @@ public class Rotational_Movement : MonoBehaviour {
     // Use this for initialization
     void Start() {
         mass = GetComponent<Object_Movement>().mass;
-        radius = GetComponent<Collision_System>().sphereRadius;
+        radius = transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -60,9 +60,9 @@ public class Rotational_Movement : MonoBehaviour {
 
         
         if (Input.GetKey(KeyCode.K))
-            force = new Vector3(0f, punchingForce, 0f);
+            force = new Vector3(0f, punchingForce, punchingForce);
         else if (Input.GetKey(KeyCode.L))
-            force = new Vector3(0f, -punchingForce, 0f);
+            force = new Vector3(0f, -punchingForce, -punchingForce);
         else
             force = new Vector3();
 
@@ -85,39 +85,40 @@ public class Rotational_Movement : MonoBehaviour {
                                       new Vector4(0f, 0f, inverseInertiaTensorEquation, 0f),
                                       new Vector4(0f, 0f, 0f, 1f));
 
-
-
-        //Inverse of Inertia Tensor: 1 / inertiaTensorEquation. Then input where inertiaTensorEquation is in regular 3x3 matrix
+        //Inverse of Inertia Tensor: 1 / inertiaTensorEquation. Then input where inertiaTensorEquation is in regular 4x4 matrix
+        //Should be converting from Local Coordinate Space to World Coordinate Space
 
         angularVelocity = angularMomentum * inertiaTensorEquation;
-
-
 
         inverseAngularVelocity = new Matrix4x4(new Vector4(0f, angularVelocity.z, -angularVelocity.y, 0f),
                                                new Vector4(-angularVelocity.z, 0f, -angularVelocity.x, 0f),
                                                new Vector4(angularVelocity.y, -angularVelocity.x, 0f, 0f),
                                                new Vector4(0f, 0f, 0f, 1f));
 
-
         angularRotation = transform.rotation.eulerAngles;
-        
-        //Take current rotation of object and convert to 3x3
-
-        //angularRotationMat = to4x4Matrix(eulerA);
-        //Matrix4x4 tempMat = multiplyByFloat(angularRotationMat, deltaTime);
-        //Matrix4x4 tempMat2 = inverseAngularVelocity * tempMat;
-        //angularRotationMat = matrixAddition(angularRotationMat, tempMat2);
-        //transform.Rotate(toEuler(angularRotationMat));
         
         transform.Rotate(rotationCalculation(angularRotation, deltaTime, inverseAngularVelocity));
 
-        angularMomentum /= 2f;
+        if (angularMomentum.x < -0.3f)
+            angularMomentum.x += ((GetComponent<Object_Movement>().reactionForce / mass) * deltaTime);
+        else if (angularMomentum.x > 0.3f)
+            angularMomentum.x -= ((GetComponent<Object_Movement>().reactionForce / mass) * deltaTime);
+        else if (angularMomentum.x > -0.3f && angularMomentum.x < 0.3f)
+            angularMomentum.x = 0f;
 
-        if (angularRotation != transform.rotation.eulerAngles)
-        {
-            //Debug.Log("Pre: " + angularRotation);
-            //Debug.Log("Post: " + transform.rotation.eulerAngles);
-        }
+        if (angularMomentum.y < -0.3f)
+            angularMomentum.y += ((GetComponent<Object_Movement>().reactionForce / mass) * deltaTime);
+        else if (angularMomentum.y > 0.3f)
+            angularMomentum.y -= ((GetComponent<Object_Movement>().reactionForce / mass) * deltaTime);
+        else if (angularMomentum.y > -0.3f && angularMomentum.y < 0.3f)
+            angularMomentum.y = 0f;
+
+        if (angularMomentum.z < -0.3f)
+            angularMomentum.z += ((GetComponent<Object_Movement>().reactionForce / mass) * deltaTime);
+        else if (angularMomentum.z > 0.3f)
+            angularMomentum.z -= ((GetComponent<Object_Movement>().reactionForce / mass) * deltaTime);
+        else if (angularMomentum.z > -0.3f && angularMomentum.z < 0.3f)
+            angularMomentum.z = 0f;
     }
 
     public Vector3 rotationCalculation(Vector3 eulerRotations, float dTime, Matrix4x4 iAV)
@@ -161,7 +162,8 @@ public class Rotational_Movement : MonoBehaviour {
         Vector4 columnA = mat.GetColumn(0) * f;
         Vector4 columnB = mat.GetColumn(1) * f;
         Vector4 columnC = mat.GetColumn(2) * f;
-        Vector4 columnD = mat.GetColumn(3) * f;
+        Vector4 columnD = new Vector4(0,0,0,1);
+        //Vector4 columnD = mat.GetColumn(3) * f;
         
         return new Matrix4x4(columnA, columnB, columnC, columnD);
     }
