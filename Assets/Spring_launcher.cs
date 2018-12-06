@@ -17,16 +17,7 @@ public class Spring_launcher : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        hit_vector = new Vector3();
-        //object_selector = new GameObject();
-        //foreach (GameObject go in Object.FindObjectsOfType(typeof(GameObject)))
-        //{
-        //    if (go.tag == "SelectorObject" && go.GetComponent<Object_Selection>())
-        //    {
-        //        object_selector = go;
-        //        break;
-        //    }
-        //}
+
     }
 
     // Update is called once per frame
@@ -81,8 +72,5 @@ public class Spring_launcher : MonoBehaviour {
                 launch_angle--;
             }
         }
-
-
-
     }
 }

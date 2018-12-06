@@ -141,7 +141,7 @@ public class Collision_System : MonoBehaviour {
                     (minAABBz > thisCollider.maxAABBz) || (thisCollider.minAABBz > maxAABBz))
                 {
                     //Check closest plane and store locally
-                    float centresDistance = Vector3.Distance(this.transform.position, thisCollider.transform.position);
+                    //float centresDistance = Vector3.Distance(this.transform.position, thisCollider.transform.position);
 
                     separatingPlane = SeparatingPlane.NULL;
 

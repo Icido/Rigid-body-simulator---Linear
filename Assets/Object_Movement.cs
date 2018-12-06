@@ -97,7 +97,6 @@ public class Object_Movement : MonoBehaviour
                 isMovingOnGround = true;
                 float deltaTime = Time.deltaTime;
 
-                //currentPosition = this.transform.position;
                 velocity += ((resultantForce / mass) * deltaTime);
                 this.transform.position += (velocity * deltaTime);
                 previousPosition = currentPosition;
@@ -144,7 +143,6 @@ public class Object_Movement : MonoBehaviour
                 this.transform.position += (velocity * deltaTime);
                 previousPosition = currentPosition;
                 currentPosition = this.transform.position;
-                //currentPosition += suvatDisplacement(velocity, , deltaTime);
             }
         }
 

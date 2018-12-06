@@ -10,8 +10,7 @@ public class Object_Selection : MonoBehaviour {
 
     public bool isSelecting = false;
     private GameObject storedGameObject;
-    //private SceneView sceneView;
-    public Vector3 hitPoint = new Vector3();
+    public Vector3 hitPoint;
 
     public Text gameObjectName;
 
@@ -33,7 +32,6 @@ public class Object_Selection : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //sceneView = ScriptableObject.CreateInstance<SceneView>();
 
         gameObjectName.text = "";
 
@@ -64,8 +62,6 @@ public class Object_Selection : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-        //sceneView = SceneView.currentDrawingSceneView;
 
         if (isSelecting)
         {
@@ -158,19 +154,4 @@ public class Object_Selection : MonoBehaviour {
             }
         }
     }
-
-
-    /*
-    void OnSceneGUI(SceneView view)
-    {
-        Event e = new Event();
-        e = Event.current;
-        if (e.mousePosition != null)
-        {
-            storedGameObject = HandleUtility.PickGameObject(e.mousePosition, true);
-
-            Debug.Log(storedGameObject);
-        }
-    }
-    */
 }

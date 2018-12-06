@@ -69,11 +69,6 @@ public class Rotational_Movement : MonoBehaviour {
         if (Input.GetKey(KeyCode.R))
             angularMomentum = new Vector3();
         
-        /*
-        if (GetComponent<Object_Movement>().isMovingOnGround)
-            force = GetComponent<Object_Movement>().resultantForce;
-        */
-
         torque = Vector3.Cross(force, leverArmVec3);
 
         float deltaTime = Time.deltaTime;
@@ -157,37 +152,7 @@ public class Rotational_Movement : MonoBehaviour {
 
         float newZ = Mathf.Acos(Mathf.Clamp(newRotZ.m00, -1, 1));
 
-        //Debug.Log("Old x: " + newRotX.m11);
-        //Debug.Log("New clamped x: " + Mathf.Clamp(newRotX.m11, -1, 1));
-        //Debug.Log("Old y: " + newRotY.m00);
-        //Debug.Log("New clamped y: " + Mathf.Clamp(newRotY.m00, -1, 1));
-        //Debug.Log("Old z: " + newRotZ.m00);
-        //Debug.Log("New clamped z: " + Mathf.Clamp(newRotZ.m00, -1, 1));
-
         return new Vector3(newX, newY, newZ);
-    }
-
-
-    public Matrix4x4 to4x4Matrix(Vector3 eulerAngles)
-    {
-        float alpha = Mathf.Deg2Rad * eulerAngles.x;
-        float beta = Mathf.Deg2Rad * eulerAngles.y;
-        float gamma = Mathf.Deg2Rad * eulerAngles.z;
-
-
-        float cosAlpha = Mathf.Cos(alpha);
-        float sinAlpha = Mathf.Sin(alpha);
-        float cosBeta = Mathf.Cos(beta);
-        float sinBeta = Mathf.Sin(beta);
-        float cosGamma = Mathf.Cos(gamma);
-        float sinGamma = Mathf.Sin(gamma);
-
-        Vector4 columnA = new Vector4(cosBeta * cosGamma, sinAlpha * sinBeta * cosGamma - cosAlpha * sinGamma, cosAlpha * sinBeta * cosGamma + sinAlpha * sinGamma, 0f);
-        Vector4 columnB = new Vector4(cosBeta * sinGamma, sinAlpha * sinBeta * sinGamma + cosAlpha * cosGamma, cosAlpha * sinBeta * sinGamma - sinAlpha * cosGamma, 0f);
-        Vector4 columnC = new Vector4(-sinBeta, sinAlpha * cosBeta, cosAlpha * cosBeta, 0f);
-        Vector4 columnD = new Vector4(0f, 0f, 0f, 1f);
-
-        return new Matrix4x4(columnA, columnB, columnC, columnD);
     }
 
     public Matrix4x4 multiplyByFloat(Matrix4x4 mat, float f)
@@ -205,27 +170,5 @@ public class Rotational_Movement : MonoBehaviour {
     {
         return new Matrix4x4(mat1.GetColumn(0) + mat2.GetColumn(0), mat1.GetColumn(1) + mat2.GetColumn(1), mat1.GetColumn(2) + mat2.GetColumn(2), mat1.GetColumn(3) + mat2.GetColumn(3));
     }
-
-    public Vector3 toEuler(Matrix4x4 mat)
-    {
-
-        float z;
-        if (mat.GetColumn(1).x == 0)
-            z = 0;
-        else
-            z = Mathf.Rad2Deg * Mathf.Atan(mat.GetColumn(1).z / mat.GetColumn(1).x);
-
-        float y;
-        if (mat.GetColumn(3).y == 0)
-            y = 0;
-        else
-            y = Mathf.Rad2Deg * Mathf.Atan(mat.GetColumn(0).y / mat.GetColumn(3).y);
-
-
-        float x = Mathf.Rad2Deg * Mathf.Asin(-mat.GetColumn(1).y);
-
-        return new Vector3(x, y, z);
-    }
-
 
 }
