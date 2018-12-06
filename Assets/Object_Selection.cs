@@ -38,8 +38,11 @@ public class Object_Selection : MonoBehaviour {
 
         foreach (GameObject go in Object.FindObjectsOfType(typeof(GameObject)))
         {
-            if(go.tag == "SelectableObject" && go.activeInHierarchy)
+            if (go.tag == "SelectableObject" && go.activeInHierarchy)
+            {
+                go.GetComponent<MeshRenderer>().material.shader = Shader.Find("Diffuse");
                 objectList.Add(go);
+            }
         }
 
         if(objectList.Count > 0)
@@ -59,12 +62,14 @@ public class Object_Selection : MonoBehaviour {
             gameObjectVelocity.text = "Current velocity: " + storedGameObject.GetComponent<Object_Movement>().velocity;
             gameObjectRotation.text = "Current rotation: " + storedGameObject.transform.rotation.eulerAngles;
             gameObjectHasCollided.text = "Has recently collided: " + storedGameObject.GetComponent<Collision_System>().isColliding;
-            
 
             if (storedGameObject.GetComponent<Spring_launcher>())
                 springLauncherAngle.text = "Launch angle: " + storedGameObject.GetComponent<Spring_launcher>().launch_angle;
             else
                 springLauncherAngle.text = "Does not have spring launcher attached.";
+
+
+
         }
         else
         {
@@ -97,21 +102,32 @@ public class Object_Selection : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
+            storedGameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("Diffuse");
+
             if (storedGameObject == objectList[0])
+            {
                 storedGameObject = objectList[objectList.Count - 1];
+                storedGameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+            }
             else
             {
                 storedGameObject = objectList[objectList.IndexOf(storedGameObject) - 1];
+                storedGameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
             }
         }
 
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
+            storedGameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("Diffuse");
             if (storedGameObject == objectList[objectList.Count - 1])
+            {
                 storedGameObject = objectList[0];
+                storedGameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+            }
             else
             {
                 storedGameObject = objectList[objectList.IndexOf(storedGameObject) + 1];
+                storedGameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
             }
         }
     }
