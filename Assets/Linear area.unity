@@ -169,10 +169,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -530,7 +530,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -761,7 +761,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -918,7 +918,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -1075,7 +1075,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -1228,6 +1228,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &631407026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 631407027}
+  - component: {fileID: 631407028}
+  - component: {fileID: 631407029}
+  m_Layer: 5
+  m_Name: Object Angular Momentum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &631407027
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631407026}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1283249318}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -5, y: -30}
+  m_SizeDelta: {x: -10, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &631407028
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631407026}
+--- !u!114 &631407029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631407026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Object Angular Momentum
 --- !u!1 &660421652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1349,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -1419,7 +1493,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -1630,7 +1704,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -1787,7 +1861,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -1918,6 +1992,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &786095843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 786095844}
+  - component: {fileID: 786095845}
+  - component: {fileID: 786095846}
+  m_Layer: 5
+  m_Name: Object Angular Velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &786095844
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 786095843}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1283249318}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -5, y: -60}
+  m_SizeDelta: {x: -10, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &786095845
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 786095843}
+--- !u!114 &786095846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 786095843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Object Angular Velocity
 --- !u!1 &811956939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +2123,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
-  colType: 1
+  colType: 2
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -2277,7 +2425,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -2380,7 +2528,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
-  colType: 1
+  colType: 2
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -2583,7 +2731,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -2804,6 +2952,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1827194934}
   - {fileID: 1544639579}
   m_Father: {fileID: 850131159}
   m_RootOrder: 3
@@ -2860,7 +3009,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -3038,7 +3187,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -3235,6 +3384,95 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: -90}
   m_SizeDelta: {x: -10, y: 30}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &1253316674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1253316675}
+  - component: {fileID: 1253316677}
+  - component: {fileID: 1253316676}
+  m_Layer: 5
+  m_Name: Controls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1253316675
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1253316674}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2136291831}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5, y: -60}
+  m_SizeDelta: {x: -10, y: 170}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1253316676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1253316674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 16
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Controls:
+
+
+    R: Resets simulation to initial state.
+
+    Point and hold left click: Uses spring force in that direction.
+
+    Up/Down Arrow keys: Changes angle of spring force.
+
+    I: Display information of current selected object.
+
+    P: Pauses simulation.
+
+    N: Next frame (when paused).
+
+    K/L: Exerts force on rotatable objects.'
+--- !u!222 &1253316677
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1253316674}
 --- !u!1 &1283249317
 GameObject:
   m_ObjectHideFlags: 0
@@ -3261,6 +3499,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 346915855}
+  - {fileID: 631407027}
+  - {fileID: 786095844}
   m_Father: {fileID: 850131159}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3316,7 +3556,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -3460,7 +3700,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -3701,7 +3941,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -3910,11 +4150,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1091091762}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5, y: -30}
+  m_AnchoredPosition: {x: 5, y: -60}
   m_SizeDelta: {x: -10, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1544639580
@@ -4003,7 +4243,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -4147,7 +4387,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -4459,7 +4699,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -4601,9 +4841,12 @@ MonoBehaviour:
   gameObjectName: {fileID: 52727916}
   gameObjectPosition: {fileID: 1820017978}
   gameObjectVelocity: {fileID: 125938169}
-  gameObjectRotation: {fileID: 346915853}
-  gameObjectHasCollided: {fileID: 1544639580}
   springLauncherAngle: {fileID: 1140638092}
+  gameObjectRotation: {fileID: 346915853}
+  gameObjectAngularMomentum: {fileID: 631407029}
+  gameObjectAngularVelocity: {fileID: 786095846}
+  gameObjectCollisionType: {fileID: 1827194936}
+  gameObjectHasCollided: {fileID: 1544639580}
 --- !u!4 &1739511559
 Transform:
   m_ObjectHideFlags: 0
@@ -4705,7 +4948,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -4852,7 +5095,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 0.5
   hasImpulsed: 0
-  colType: 1
+  colType: 2
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -5062,6 +5305,80 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Object Position
+--- !u!1 &1827194933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1827194934}
+  - component: {fileID: 1827194935}
+  - component: {fileID: 1827194936}
+  m_Layer: 5
+  m_Name: Object Collision Type
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1827194934
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1827194933}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1091091762}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5, y: -30}
+  m_SizeDelta: {x: -10, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &1827194935
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1827194933}
+--- !u!114 &1827194936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1827194933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Object Collision Type
 --- !u!1 &1883430577
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,7 +5458,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -5339,7 +5656,7 @@ MonoBehaviour:
   isColliding: 0
   coefficientOfRestitution: 1
   hasImpulsed: 0
-  colType: 0
+  colType: 1
   sphereRadius: 0
   collidableObjects: []
   collidingWith: []
@@ -5434,6 +5751,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 52727915}
+  - {fileID: 1253316675}
   m_Father: {fileID: 850131159}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

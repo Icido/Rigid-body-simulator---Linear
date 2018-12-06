@@ -14,12 +14,18 @@ public class Object_Selection : MonoBehaviour {
     public Vector3 hitPoint = new Vector3();
 
     public Text gameObjectName;
+
     public Text gameObjectPosition;
     public Text gameObjectVelocity;
-    public Text gameObjectRotation;
-    public Text gameObjectHasCollided;
     public Text springLauncherAngle;
 
+    public Text gameObjectRotation;
+    public Text gameObjectAngularMomentum;
+    public Text gameObjectAngularVelocity;
+
+    public Text gameObjectCollisionType;
+    public Text gameObjectHasCollided;
+    
 
     private List<GameObject> objectList = new List<GameObject>();
 
@@ -30,11 +36,17 @@ public class Object_Selection : MonoBehaviour {
         //sceneView = ScriptableObject.CreateInstance<SceneView>();
 
         gameObjectName.text = "";
+
         gameObjectPosition.text = "";
         gameObjectVelocity.text = "";
-        gameObjectRotation.text = "";
-        gameObjectHasCollided.text = "";
         springLauncherAngle.text = "";
+
+        gameObjectRotation.text = "";
+        gameObjectAngularMomentum.text = "";
+        gameObjectAngularVelocity.text = "";
+
+        gameObjectCollisionType.text = "";
+        gameObjectHasCollided.text = "";
 
         foreach (GameObject go in Object.FindObjectsOfType(typeof(GameObject)))
         {
@@ -58,11 +70,26 @@ public class Object_Selection : MonoBehaviour {
         if (isSelecting)
         {
             gameObjectName.text = "Current selected object: " + storedGameObject.name;
+
             gameObjectPosition.text = "Current position: " + storedGameObject.GetComponent<Object_Movement>().currentPosition;
             gameObjectVelocity.text = "Current velocity: " + storedGameObject.GetComponent<Object_Movement>().velocity;
-            gameObjectRotation.text = "Current rotation: " + storedGameObject.transform.rotation.eulerAngles;
-            gameObjectHasCollided.text = "Has recently collided: " + storedGameObject.GetComponent<Collision_System>().isColliding;
 
+            gameObjectRotation.text = "Current rotation: " + storedGameObject.transform.rotation.eulerAngles;
+
+            if (storedGameObject.GetComponent<Rotational_Movement>())
+            {
+                gameObjectAngularMomentum.text = "Current angular momentum: " + storedGameObject.GetComponent<Rotational_Movement>().angularMomentum;
+                gameObjectAngularVelocity.text = "Current angular velocity: " + storedGameObject.GetComponent<Rotational_Movement>().angularVelocity;
+            }
+            else
+            {
+                gameObjectAngularMomentum.text = "No rotational script attached.";
+                gameObjectAngularVelocity.text = "No rotational script attached.";
+            }
+
+            gameObjectCollisionType.text = "Collision Type: " + storedGameObject.GetComponent<Collision_System>().colType.ToString();
+            gameObjectHasCollided.text = "Has recently collided: " + storedGameObject.GetComponent<Collision_System>().isColliding;
+            
             if (storedGameObject.GetComponent<Spring_launcher>())
                 springLauncherAngle.text = "Launch angle: " + storedGameObject.GetComponent<Spring_launcher>().launch_angle;
             else

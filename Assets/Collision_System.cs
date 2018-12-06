@@ -10,14 +10,15 @@ public class Collision_System : MonoBehaviour {
     [SerializeField]
     private bool hasImpulsed = false;
 
-    enum CollisionType
+    public enum CollisionType
     {
+        NULL,
         Sphere,
         AABB
     }
 
     [SerializeField]
-    private CollisionType colType;
+    public CollisionType colType = CollisionType.NULL;
 
     public float sphereRadius;
 
@@ -113,6 +114,8 @@ public class Collision_System : MonoBehaviour {
             {
                 if (Vector3.Distance(collider.transform.position, transform.position) < (thisCollider.sphereRadius + sphereRadius))
                 {
+                    Debug.Log("Collision between " + name + " and " + thisCollider.name);
+
                     collidingWith.Add(collider);
 
                     collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
@@ -196,6 +199,8 @@ public class Collision_System : MonoBehaviour {
                     collidingWith.Add(collider);
                     collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
 
+                    Debug.Log("Collision between " + name + " and " + thisCollider.name);
+
                     Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
                     Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
 
@@ -220,6 +225,8 @@ public class Collision_System : MonoBehaviour {
 
                     collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
 
+                    Debug.Log("Collision between " + name + " and " + thisCollider.name);
+
                     Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
                     Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
 
@@ -243,6 +250,8 @@ public class Collision_System : MonoBehaviour {
                     collidingWith.Add(collider);
 
                     collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
+
+                    Debug.Log("Collision between " + name + " and " + thisCollider.name);
 
                     Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
                     Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
