@@ -252,6 +252,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &125938166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 125938167}
+  - component: {fileID: 125938168}
+  - component: {fileID: 125938169}
+  m_Layer: 5
+  m_Name: Object Velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &125938167
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 125938166}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1797503495}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5, y: -60}
+  m_SizeDelta: {x: -10, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &125938168
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 125938166}
+--- !u!114 &125938169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 125938166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Object Velocity
 --- !u!1 &316463922
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,11 +340,11 @@ GameObject:
   - component: {fileID: 316463924}
   m_Layer: 0
   m_Name: Other Sphere (5)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &316463923
 Transform:
   m_ObjectHideFlags: 0
@@ -367,6 +441,80 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 316463922}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &346915852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 346915855}
+  - component: {fileID: 346915854}
+  - component: {fileID: 346915853}
+  m_Layer: 5
+  m_Name: Object Rotation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &346915853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 346915852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Object Rotation
+--- !u!222 &346915854
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 346915852}
+--- !u!224 &346915855
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 346915852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1797503495}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5, y: -90}
+  m_SizeDelta: {x: -10, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &452341271
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,11 +529,11 @@ GameObject:
   - component: {fileID: 452341273}
   m_Layer: 0
   m_Name: Other Sphere (10)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &452341272
 Transform:
   m_ObjectHideFlags: 0
@@ -496,11 +644,11 @@ GameObject:
   - component: {fileID: 461038456}
   m_Layer: 0
   m_Name: Other Sphere (13)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &461038455
 Transform:
   m_ObjectHideFlags: 0
@@ -611,11 +759,11 @@ GameObject:
   - component: {fileID: 477271985}
   m_Layer: 0
   m_Name: Other Sphere (6)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &477271984
 Transform:
   m_ObjectHideFlags: 0
@@ -769,11 +917,11 @@ GameObject:
   - component: {fileID: 660421654}
   m_Layer: 0
   m_Name: Other Sphere (8)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &660421653
 Transform:
   m_ObjectHideFlags: 0
@@ -884,11 +1032,11 @@ GameObject:
   - component: {fileID: 699620885}
   m_Layer: 0
   m_Name: Other Sphere (3)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &699620885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,11 +1209,11 @@ GameObject:
   - component: {fileID: 811956940}
   m_Layer: 0
   m_Name: Other Cube
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &811956940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,7 +1324,7 @@ GameObject:
   - component: {fileID: 831540762}
   m_Layer: 0
   m_Name: Other Cube (2)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1200,7 +1348,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 831540760}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbe877845d8ac7e4d977d031911226cf, type: 3}
   m_Name: 
@@ -1223,7 +1371,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 831540760}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df0a873e0db30747ba920e9f4f98a98, type: 3}
   m_Name: 
@@ -1291,8 +1439,8 @@ GameObject:
   - component: {fileID: 831962236}
   - component: {fileID: 831962235}
   m_Layer: 0
-  m_Name: Sphere
-  m_TagString: PhysicsObject
+  m_Name: Player Sphere
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1519,11 +1667,11 @@ GameObject:
   - component: {fileID: 929006023}
   m_Layer: 0
   m_Name: Other Sphere (7)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &929006022
 Transform:
   m_ObjectHideFlags: 0
@@ -1720,11 +1868,11 @@ GameObject:
   - component: {fileID: 1091187459}
   m_Layer: 0
   m_Name: Other Sphere (11)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1091187458
 Transform:
   m_ObjectHideFlags: 0
@@ -1835,7 +1983,7 @@ GameObject:
   - component: {fileID: 1121017275}
   m_Layer: 0
   m_Name: Other Sphere
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1950,11 +2098,11 @@ GameObject:
   - component: {fileID: 1323262978}
   m_Layer: 0
   m_Name: Other Sphere (15)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1323262977
 Transform:
   m_ObjectHideFlags: 0
@@ -2065,11 +2213,11 @@ GameObject:
   - component: {fileID: 1409622997}
   m_Layer: 0
   m_Name: Other Sphere (1)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1409622997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2180,7 +2328,7 @@ GameObject:
   - component: {fileID: 1426853103}
   m_Layer: 0
   m_Name: Other Cube (4)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2204,7 +2352,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1426853101}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbe877845d8ac7e4d977d031911226cf, type: 3}
   m_Name: 
@@ -2227,7 +2375,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1426853101}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df0a873e0db30747ba920e9f4f98a98, type: 3}
   m_Name: 
@@ -2295,11 +2443,11 @@ GameObject:
   - component: {fileID: 1457201006}
   m_Layer: 0
   m_Name: Other Sphere (9)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1457201005
 Transform:
   m_ObjectHideFlags: 0
@@ -2410,7 +2558,7 @@ GameObject:
   - component: {fileID: 1472309711}
   m_Layer: 0
   m_Name: Other Cube (1)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2434,7 +2582,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1472309709}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbe877845d8ac7e4d977d031911226cf, type: 3}
   m_Name: 
@@ -2457,7 +2605,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1472309709}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df0a873e0db30747ba920e9f4f98a98, type: 3}
   m_Name: 
@@ -2525,11 +2673,11 @@ GameObject:
   - component: {fileID: 1546647779}
   m_Layer: 0
   m_Name: Other Sphere (4)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1546647778
 Transform:
   m_ObjectHideFlags: 0
@@ -2640,7 +2788,7 @@ GameObject:
   - component: {fileID: 1582101452}
   m_Layer: 0
   m_Name: Other Sphere (2)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2751,8 +2899,6 @@ GameObject:
   - component: {fileID: 1668654171}
   - component: {fileID: 1668654170}
   - component: {fileID: 1668654169}
-  - component: {fileID: 1668654168}
-  - component: {fileID: 1668654172}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -2760,25 +2906,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1668654168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1668654167}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2df0a873e0db30747ba920e9f4f98a98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isColliding: 0
-  coefficientOfRestitution: 0
-  hasImpulsed: 0
-  colType: 1
-  sphereRadius: 0
-  collidableObjects: []
-  collidingWith: []
-  collisionNormals: []
 --- !u!23 &1668654169
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2833,29 +2960,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1668654172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1668654167}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe877845d8ac7e4d977d031911226cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: 9.81
-  staticFriction: 0.7
-  kineticFriction: 0.5
-  mass: 100000
-  previousPosition: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  currentPosition: {x: 0, y: 0, z: 0}
-  appliedForce: {x: 0, y: 0, z: 0}
-  resultantForce: {x: 0, y: 0, z: 0}
-  reactionForce: 0
-  isMovingOnGround: 0
-  leniancy: 10
 --- !u!1 &1732913129
 GameObject:
   m_ObjectHideFlags: 0
@@ -2870,7 +2974,7 @@ GameObject:
   - component: {fileID: 1732913131}
   m_Layer: 0
   m_Name: Other Cube (3)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2894,7 +2998,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1732913129}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbe877845d8ac7e4d977d031911226cf, type: 3}
   m_Name: 
@@ -2917,7 +3021,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1732913129}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df0a873e0db30747ba920e9f4f98a98, type: 3}
   m_Name: 
@@ -2985,11 +3089,11 @@ GameObject:
   - component: {fileID: 1735887383}
   m_Layer: 0
   m_Name: Other Sphere (14)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1735887382
 Transform:
   m_ObjectHideFlags: 0
@@ -3113,8 +3217,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af18d4f078e75a439e9818a23a635dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSelecting: 0
   gameObjectName: {fileID: 52727916}
-  isSelected: 0
+  gameObjectPosition: {fileID: 1820017978}
+  gameObjectVelocity: {fileID: 125938169}
+  gameObjectRotation: {fileID: 346915853}
 --- !u!4 &1739511559
 Transform:
   m_ObjectHideFlags: 0
@@ -3144,7 +3251,7 @@ GameObject:
   - component: {fileID: 1790778907}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3330,14 +3437,91 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 52727915}
+  - {fileID: 1820017976}
+  - {fileID: 125938167}
+  - {fileID: 346915855}
   m_Father: {fileID: 850131159}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1820017975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1820017976}
+  - component: {fileID: 1820017977}
+  - component: {fileID: 1820017978}
+  m_Layer: 5
+  m_Name: Object Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1820017976
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820017975}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1797503495}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5, y: -30}
+  m_SizeDelta: {x: -10, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &1820017977
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820017975}
+--- !u!114 &1820017978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820017975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Object Position
 --- !u!1 &1883430577
 GameObject:
   m_ObjectHideFlags: 0
@@ -3352,7 +3536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1883430578
 Transform:
   m_ObjectHideFlags: 0
@@ -3384,11 +3568,11 @@ GameObject:
   - component: {fileID: 1958786815}
   m_Layer: 0
   m_Name: Other Sphere (12)
-  m_TagString: Untagged
+  m_TagString: SelectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1958786814
 Transform:
   m_ObjectHideFlags: 0

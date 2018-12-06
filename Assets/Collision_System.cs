@@ -118,10 +118,14 @@ public class Collision_System : MonoBehaviour {
 
                     collisionNormals.Add(Vector3.Normalize(collider.transform.position - transform.position));
 
-                    Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
-                    Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
-
-                    recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
+                    if (collider.GetComponent<Object_Movement>().previousPosition != null && GetComponent<Object_Movement>().previousPosition != null &&
+                        collider.GetComponent<Object_Movement>().previousPosition != collider.GetComponent<Object_Movement>().currentPosition && 
+                        GetComponent<Object_Movement>().previousPosition != GetComponent<Object_Movement>().currentPosition)
+                    {
+                        Vector3 thisPositionMinus = collider.GetComponent<Object_Movement>().previousPosition - collider.GetComponent<Object_Movement>().currentPosition;
+                        Vector3 myPositionMinus = GetComponent<Object_Movement>().previousPosition - GetComponent<Object_Movement>().currentPosition;
+                        recursiveStepBack(collider, thisCollider, thisPositionMinus, myPositionMinus);
+                    }
                 }
             }
 
@@ -312,11 +316,38 @@ public class Collision_System : MonoBehaviour {
         objectCollidingWith.transform.Translate(collidingPositionMinus);
         this.transform.Translate(myPositionMinus);
 
+        if (objectCollidingWith.GetComponent<Collision_System>().colType == CollisionType.Sphere && colType == CollisionType.Sphere)
+        {
+            if (Vector3.Distance(objectCollidingWith.transform.position, transform.position) < (objectCollision.sphereRadius + sphereRadius))
+                recursiveStepBack(objectCollidingWith, objectCollision, collidingPositionMinus, myPositionMinus);
+            else
+                return;
+        }
 
-        if (Vector3.Distance(objectCollidingWith.transform.position, transform.position) < (objectCollision.sphereRadius + sphereRadius))
-            recursiveStepBack(objectCollidingWith, objectCollision, collidingPositionMinus, myPositionMinus);
-        else
-            return;
+        if (objectCollidingWith.GetComponent<Collision_System>().colType == CollisionType.AABB && colType == CollisionType.AABB)
+        {
+            //if (Vector3.Distance(objectCollidingWith.transform.position, transform.position) < (objectCollision.sphereRadius + sphereRadius))
+            //    recursiveStepBack(objectCollidingWith, objectCollision, collidingPositionMinus, myPositionMinus);
+            //else
+                return;
+        }
+
+        if (objectCollidingWith.GetComponent<Collision_System>().colType == CollisionType.Sphere && colType == CollisionType.AABB)
+        {
+            //if (Vector3.Distance(objectCollidingWith.transform.position, transform.position) < (objectCollision.sphereRadius + sphereRadius))
+            //    recursiveStepBack(objectCollidingWith, objectCollision, collidingPositionMinus, myPositionMinus);
+            //else
+                return;
+        }
+
+        if (objectCollidingWith.GetComponent<Collision_System>().colType == CollisionType.AABB && colType == CollisionType.Sphere)
+        {
+            //if (Vector3.Distance(objectCollidingWith.transform.position, transform.position) < (objectCollision.sphereRadius + sphereRadius))
+            //    recursiveStepBack(objectCollidingWith, objectCollision, collidingPositionMinus, myPositionMinus);
+            //else
+                return;
+        }
+
     }
 
 

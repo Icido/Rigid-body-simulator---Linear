@@ -47,9 +47,9 @@ public class Spring_launcher : MonoBehaviour {
 
         if(Input.GetKey(KeyCode.W))
         {
-            if(launch_angle >= 90)
+            if(launch_angle > 359)
             {
-                launch_angle = 90;
+                launch_angle = 0;
             }
             else
             {
@@ -59,9 +59,9 @@ public class Spring_launcher : MonoBehaviour {
 
         if(Input.GetKey(KeyCode.S))
         {
-            if(launch_angle <= 0)
+            if(launch_angle < 0)
             {
-                launch_angle = 0;
+                launch_angle = 359;
             }
             else
             {

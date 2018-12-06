@@ -8,17 +8,36 @@ using UnityEditor;
 
 public class Object_Selection : MonoBehaviour {
 
-    public Text gameObjectName;
-    public bool isSelected = false;
+    public bool isSelecting = false;
     private GameObject storedGameObject;
     private SceneView sceneView;
+
+    public Text gameObjectName;
+    public Text gameObjectPosition;
+    public Text gameObjectVelocity;
+    public Text gameObjectRotation;
+
+
+    private List<GameObject> objectList = new List<GameObject>();
+
 
 
     // Use this for initialization
     void Start () {
         sceneView = ScriptableObject.CreateInstance<SceneView>();
-        storedGameObject = new GameObject();
         gameObjectName.text = "";
+        gameObjectPosition.text = "";
+        gameObjectVelocity.text = "";
+        gameObjectRotation.text = "";
+        
+        foreach (GameObject go in Object.FindObjectsOfType(typeof(GameObject)))
+        {
+            if(go.tag == "SelectableObject" && go.activeInHierarchy)
+                objectList.Add(go);
+        }
+
+        if(objectList.Count > 0)
+            storedGameObject = objectList[0];
 
     }
 
@@ -27,22 +46,42 @@ public class Object_Selection : MonoBehaviour {
 
         sceneView = SceneView.currentDrawingSceneView;
 
-        gameObjectName.text = "Hello";
-
-        if (isSelected)
+        if (isSelecting)
         {
             gameObjectName.text = "Current selected object: " + storedGameObject.name;
+            gameObjectPosition.text = "Current position: " + storedGameObject.GetComponent<Object_Movement>().currentPosition;
+            gameObjectVelocity.text = "Current velocity: " + storedGameObject.GetComponent<Object_Movement>().velocity;
+            gameObjectRotation.text = "Current rotation: " + storedGameObject.transform.rotation.eulerAngles;
             Debug.Log("Display!");
 
         }
+        else
+        {
+            gameObjectName.text = "";
+            gameObjectPosition.text = "";
+            gameObjectVelocity.text = "";
+            gameObjectRotation.text = "";
+            Debug.Log("No display!");
+        }
 
-        isSelected = false;
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Fire!");
 
-            OnSceneGUI(sceneView);
+
+
+
+
+
+
+
+
+
+
+
+
+            //OnSceneGUI(sceneView);
 
             /*
             RaycastHit hitInformation = new RaycastHit();
@@ -72,22 +111,45 @@ public class Object_Selection : MonoBehaviour {
 
         }
 
-        
+        if (Input.GetKeyUp(KeyCode.I))
+            isSelecting = !isSelecting;
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            if (storedGameObject == objectList[0])
+                storedGameObject = objectList[objectList.Count - 1];
+            else
+            {
+                storedGameObject = objectList[objectList.IndexOf(storedGameObject) - 1];
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            if (storedGameObject == objectList[objectList.Count - 1])
+                storedGameObject = objectList[0];
+            else
+            {
+                storedGameObject = objectList[objectList.IndexOf(storedGameObject) + 1];
+            }
+
+        }
+
 
     }
 
-    
 
+    /*
     void OnSceneGUI(SceneView view)
     {
         Event e = new Event();
         e = Event.current;
-        Debug.Log(e);
-        if (e != null)
+        if (e.mousePosition != null)
         {
             storedGameObject = HandleUtility.PickGameObject(e.mousePosition, true);
 
             Debug.Log(storedGameObject);
         }
     }
+    */
 }

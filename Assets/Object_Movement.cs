@@ -17,104 +17,124 @@ public class Object_Movement : MonoBehaviour
     public float reactionForce;
     public bool isMovingOnGround = false;
 
+    private bool paused = false;
+
     public int leniancy = 10;
-    
+
+    private Vector3 initialPosition;
+    private Vector3 initialVelocity;
 
     // Use this for initialization
     void Start()
     {
-
+        initialPosition = transform.position;
+        initialVelocity = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float weight = mass * gravity;
-        reactionForce = 0f;
-        resultantForce = new Vector3(0,0,0);
-
-        if (GetComponent<Spring_launcher>())
+        if(Input.GetKeyUp(KeyCode.R))
         {
-            if (GetComponent<Spring_launcher>().spring_force != 0)
+            transform.position = initialPosition;
+            currentPosition = initialPosition;
+            velocity = initialVelocity;
+        }
+
+        if (Input.GetKeyUp(KeyCode.P))
+            paused = !paused;
+
+        if (Input.GetKeyUp(KeyCode.N))
+            paused = !paused;
+
+        if (!paused)
+        {
+            float weight = mass * gravity;
+            reactionForce = 0f;
+            resultantForce = new Vector3(0, 0, 0);
+
+            if (GetComponent<Spring_launcher>())
             {
-                float angle = GetComponent<Spring_launcher>().launch_angle * Mathf.Deg2Rad;
-                float force = GetComponent<Spring_launcher>().spring_force;
+                if (GetComponent<Spring_launcher>().spring_force != 0)
+                {
+                    float angle = GetComponent<Spring_launcher>().launch_angle * Mathf.Deg2Rad;
+                    float force = GetComponent<Spring_launcher>().spring_force;
 
-                resultantForce += new Vector3(force * Mathf.Cos(angle), force * Mathf.Sin(angle), 0);
+                    resultantForce += new Vector3(force * Mathf.Cos(angle), force * Mathf.Sin(angle), 0);
 
-                this.GetComponent<Spring_launcher>().spring_force = 0;
+                    this.GetComponent<Spring_launcher>().spring_force = 0;
+                }
             }
-        }
-        
-
-        //Choose which reaction force to use
-        if (!isMovingOnGround)
-        {
-            reactionForce = staticFriction * weight;
-        }
-        else
-        {
-            reactionForce = kineticFriction * weight;
-        }
 
 
-        if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce ||
-            resultantForce.z > reactionForce || resultantForce.z < -reactionForce ||
-            resultantForce.y > 0)
-        {
-            isMovingOnGround = true;
-            float deltaTime = Time.deltaTime;
-
-            //currentPosition = this.transform.position;
-            velocity += ((resultantForce / mass) * deltaTime);
-            this.transform.position += (velocity * deltaTime);
-            previousPosition = currentPosition;
-            currentPosition = this.transform.position;
-
-        }
-        else
-        {
-            isMovingOnGround = false;
-            float deltaTime = Time.deltaTime;
-
-            if (transform.position.y > (transform.localScale.y / 2))
+            //Choose which reaction force to use
+            if (!isMovingOnGround)
             {
-                velocity.y -= gravity;
+                reactionForce = staticFriction * weight;
             }
             else
             {
-                if (velocity.x < -0.3f)
-                    velocity.x += ((reactionForce / mass) * deltaTime);
-                else if (velocity.x > 0.3f)
-                    velocity.x -= ((reactionForce / mass) * deltaTime);
-                else if (velocity.x > -0.3f && velocity.x < 0.3f)
-                    velocity.x = 0f;
-
-                if (velocity.z < -0.3f)
-                    velocity.z += ((reactionForce / mass) * deltaTime);
-                else if (velocity.z > 0.3f)
-                    velocity.z -= ((reactionForce / mass) * deltaTime);
-                else if (velocity.z > -0.3f && velocity.z < 0.3f)
-                    velocity.z = 0f;
+                reactionForce = kineticFriction * weight;
             }
 
 
-            if (velocity.y > -(GetComponent<Collision_System>().coefficientOfRestitution * leniancy) && velocity.y < (GetComponent<Collision_System>().coefficientOfRestitution * leniancy))
-                velocity.y = 0f;
+            if (resultantForce.x > reactionForce || resultantForce.x < -reactionForce ||
+                resultantForce.z > reactionForce || resultantForce.z < -reactionForce ||
+                resultantForce.y > 0)
+            {
+                isMovingOnGround = true;
+                float deltaTime = Time.deltaTime;
 
-            if (transform.position.y < (transform.localScale.y / 2))
-                transform.position = new Vector3(transform.position.x, (transform.localScale.y / 2), transform.position.z);
+                //currentPosition = this.transform.position;
+                velocity += ((resultantForce / mass) * deltaTime);
+                this.transform.position += (velocity * deltaTime);
+                previousPosition = currentPosition;
+                currentPosition = this.transform.position;
+
+            }
+            else
+            {
+                isMovingOnGround = false;
+                float deltaTime = Time.deltaTime;
+
+                if (transform.position.y > (transform.localScale.y / 2))
+                {
+                    velocity.y -= gravity;
+                }
+                else
+                {
+                    if (velocity.x < -0.3f)
+                        velocity.x += ((reactionForce / mass) * deltaTime);
+                    else if (velocity.x > 0.3f)
+                        velocity.x -= ((reactionForce / mass) * deltaTime);
+                    else if (velocity.x > -0.3f && velocity.x < 0.3f)
+                        velocity.x = 0f;
+
+                    if (velocity.z < -0.3f)
+                        velocity.z += ((reactionForce / mass) * deltaTime);
+                    else if (velocity.z > 0.3f)
+                        velocity.z -= ((reactionForce / mass) * deltaTime);
+                    else if (velocity.z > -0.3f && velocity.z < 0.3f)
+                        velocity.z = 0f;
+                }
 
 
-            //else if velocity down is greater than terminal velocity, keep it at terminal velocity
-            //until it collides with the floor
+                if (velocity.y > -(GetComponent<Collision_System>().coefficientOfRestitution * leniancy) && velocity.y < (GetComponent<Collision_System>().coefficientOfRestitution * leniancy))
+                    velocity.y = 0f;
 
-            this.transform.position += (velocity * deltaTime);
-            previousPosition = currentPosition;
-            currentPosition = this.transform.position;
-            //currentPosition += suvatDisplacement(velocity, , deltaTime);
+                if (transform.position.y < (transform.localScale.y / 2))
+                    transform.position = new Vector3(transform.position.x, (transform.localScale.y / 2), transform.position.z);
+
+
+                //else if velocity down is greater than terminal velocity, keep it at terminal velocity
+                //until it collides with the floor
+
+                this.transform.position += (velocity * deltaTime);
+                previousPosition = currentPosition;
+                currentPosition = this.transform.position;
+                //currentPosition += suvatDisplacement(velocity, , deltaTime);
+            }
         }
-
     }
 
 }
